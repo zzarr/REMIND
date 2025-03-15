@@ -19,42 +19,26 @@
                 <ul class="navbar-nav">
                     <li class="menu-label mt-0"><i class="ti ti-letter-m"></i><span>ain</span></li>
                     <hr>
-                    <li class="nav-item">
-                        <a class="nav-link " href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="sidebarAnalytics">
-                            <i class="ti ti-home menu-icon"></i>
-                            <span> Dashboards</span>
-                        </a>
-                        <div class="collapse " id="sidebarDashboards">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="demo-material-index.html">Analytics</a>
-                                </li><!--end nav-item-->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="crypto-index.html">Crypto</a>
-                                </li><!--end nav-item-->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="crm-index.html">CRM</a>
-                                </li><!--end nav-item-->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="projects-index.html">Project</a>
-                                </li><!--end nav-item-->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="ecommerce-index.html">Ecommerce</a>
-                                </li><!--end nav-item-->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="helpdesk-index.html">Helpdesk</a>
-                                </li><!--end nav-item-->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="hospital-index.html">Hospital</a>
-                                </li><!--end nav-item-->
-                            </ul><!--end nav-->
-                        </div><!--end sidebarDashboards-->
-                    </li><!--end nav-item-->
+
 
                     <li class="nav-item">
                         <a class="nav-link" href="apps-contact-list.html"><i
-                                class="ti ti-headphones menu-icon"></i><span>Contact List</span></a>
+                                class="ti ti-home menu-icon"></i><span>Dashboard</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="apps-contact-list.html"><i class="ti ti-user menu-icon"></i><span>Akun
+                                Tim </span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="apps-contact-list.html"><i
+                                class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="apps-contact-list.html"><i
+                                class="ti ti-clipboard menu-icon"></i><span>Kuisioner</span></a>
                     </li>
 
 
