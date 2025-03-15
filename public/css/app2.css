@@ -8058,5 +8058,10 @@ ul.steppedprogress li:first-child:after {
 
 .bg-healt {
     background-color: #0f9e99 !important;
+    
+}
+
+.shadow-custom {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow hitam tipis */
 }
 

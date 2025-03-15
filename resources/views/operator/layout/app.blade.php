@@ -78,7 +78,9 @@
     <!-- Javascript  -->
     <!-- vendor js -->
 
+    @stack('script')
     @include('components.script')
+
 
 </body>
 <!--end body-->
