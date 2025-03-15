@@ -47,11 +47,11 @@
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Operator</a>
                                     </li><!--end nav-item-->
-                                    <li class="breadcrumb-item active"><a href="#">Dashboard</a>
+                                    <li class="breadcrumb-item active"><a href="#">@yield('title')</a>
                                     </li><!--end nav-item-->
                                 </ol>
                             </div>
-                            <h4 class="page-title">Dashboard</h4>
+                            <h4 class="page-title">@yield('title')</h4>
                         </div><!--end page-title-box-->
                     </div><!--end col-->
                 </div>

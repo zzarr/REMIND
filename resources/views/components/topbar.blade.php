@@ -2,10 +2,6 @@
     <!-- Navbar -->
     <nav class="navbar-custom" id="navbar-custom">
         <ul class="list-unstyled topbar-nav float-end mb-0">
-
-
-
-
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle nav-user" data-bs-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">

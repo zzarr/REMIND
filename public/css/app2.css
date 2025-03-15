@@ -8055,3 +8055,8 @@ ul.steppedprogress li:first-child:after {
 .navbar-nav .nav-item .nav-link.active i {
     color: #fff !important;
 }
+
+.bg-healt {
+    background-color: #0f9e99 !important;
+}
+
