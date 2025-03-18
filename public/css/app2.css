@@ -681,7 +681,7 @@ body.dark-sidebar .leftbar-tab-menu .main-icon-menu .main-icon-menu-body .nav.na
 .left-sidebar .menu-body .nav-item .nav-link.active i {
     background-color: #0f9e99;
     margin: 5px 0px;
-    padding: 10px;
+   
     color: #fff !important;
 }
 .left-sidebar .navbar-vertical .navbar-nav {

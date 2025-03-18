@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Operator\{
-    DashboardController as OperatorDashboardController
+    DashboardController as OperatorDashboardController,
+    AkunController
 };
 
 /*
@@ -30,6 +31,11 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
     Route::group(['prefix' => 'operator', 'as' => 'operator.'], function () {
 
         Route::get('/dashboard', [OperatorDashboardController::class, 'index'])->name('dashboard');
+
+        Route::group(['prefix' => 'akun', 'as' => 'akun.'], function () {
+            Route::get('/', [AkunController::class, 'index'])->name('index');
+            Route::get('/data', [AkunController::class, 'data'])->name('data');
+        });
 
     });
 

@@ -19,6 +19,7 @@
     <!-- App css -->
 
     @include('components.head-css')
+    @stack('css')
 
 </head>
 
@@ -78,8 +79,10 @@
     <!-- Javascript  -->
     <!-- vendor js -->
 
-    @stack('script')
+
     @include('components.script')
+    @stack('script')
+
 
 
 </body>

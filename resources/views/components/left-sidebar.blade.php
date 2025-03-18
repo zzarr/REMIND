@@ -22,12 +22,13 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="apps-contact-list.html"><i
+                        <a class="nav-link" href="{{ route('operator.dashboard') }}"><i
                                 class="ti ti-home menu-icon"></i><span>Dashboard</span></a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="apps-contact-list.html"><i class="ti ti-user menu-icon"></i><span>Akun
+                        <a class="nav-link" href="{{ route('operator.akun.index') }}"><i
+                                class="ti ti-user menu-icon"></i><span>Akun
                                 Tim </span></a>
                     </li>
 

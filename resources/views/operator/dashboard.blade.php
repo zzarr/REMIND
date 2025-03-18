@@ -69,12 +69,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-12">
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header bg-healt text-white">
                             Riwayat Pretest
                         </div>
-                        <div class="card-body">
+                        <div class="card-body shadow-custom">
                             <div class="table-responsive">
                                 <table class="table mb-0 table-centered">
                                     <thead>
@@ -115,12 +115,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
+                <div class="col-lg-6 ">
                     <div class="card">
                         <div class="card-header bg-healt text-white">
                             Riwayat Posttest
                         </div>
-                        <div class="card-body">
+                        <div class="card-body shadow-custom">
                             <div class="table-responsive">
                                 <table class="table mb-0 table-centered">
                                     <thead>
@@ -173,7 +173,7 @@
 
                     </div> <!--end row-->
                 </div><!--end card-header-->
-                <div class="card-body">
+                <div class="card-body shadow-custom">
                     <div class="text-center">
                         <div id="ana_device" class="apex-charts"></div>
                         <h6 class="bg-light-alt py-3 px-2 mb-0">
