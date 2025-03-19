@@ -21,6 +21,7 @@
     @include('components.head-css')
     @stack('css')
 
+
 </head>
 
 <body id="body">
