@@ -5,6 +5,14 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body shadow-custom">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button class="btn btn-outline-green" title="tambah" data-bs-toggle="modal"
+                            data-bs-target="#tambahAkun-modal"><i class="ti ti-plus fs-5"></i></button>
+                        <button id="refreshButton" type="button" class="btn btn-outline-primary">
+                            <i class="ti ti-refresh"></i> Muat Ulang
+                        </button>
+
+                    </div>
                     <button class="btn btn-outline-green" title="tambah" data-bs-toggle="modal"
                         data-bs-target="#tambahAkun-modal"><i class="ti ti-plus fs-5"></i></button>
                     <div class="table-responsive">
@@ -64,9 +72,9 @@
                 let formData = {
                     name: $("input[name='name']").val(),
                     email: $("input[name='email']").val(),
-                    password: password, // Hanya password yang dikirim
+                    password: password,
                     role: $("select[name='role']").val(),
-                    _token: "{{ csrf_token() }}" // Laravel CSRF token
+                    _token: "{{ csrf_token() }}"
                 };
 
                 $.ajax({
@@ -80,10 +88,11 @@
                     success: function(response) {
                         Notiflix.Loading.remove();
 
-                        if (response.success) { // Pastikan ini cocok dengan response backend
+                        if (response.success) {
                             Notiflix.Notify.success(response.message);
-                            $("form")[0].reset(); // Reset form setelah sukses
-                            $("#tambahAkun-modal").modal("hide"); // Pakai ID modal yang benar
+                            $("form")[0].reset();
+                            $("#tambahAkun-modal").modal("hide");
+                            window.location.reload();
 
                         } else {
                             Notiflix.Notify.failure(response.message ||
@@ -136,42 +145,71 @@
                 }
             });
 
-            // Mengambil data dari server menggunakan AJAX
+            // **Fungsi untuk me-load ulang data tabel setelah perubahan**
             function loadUserData() {
                 $.ajax({
-                    url: "{{ route('operator.akun.data') }}", // Ganti dengan route API-mu
+                    url: "{{ route('operator.akun.data') }}", // Sesuaikan dengan route API-mu
                     method: "GET",
                     dataType: "json",
+                    beforeSend: function() {
+                        Notiflix.Loading.standard("Memuat data...");
+                        console.log("Memulai request baru...");
+                    },
                     success: function(response) {
-                        // Kosongkan tabel sebelum mengisi ulang
+                        Notiflix.Loading.remove();
+                        console.log("Data dari server:", response); // Debugging
+
+                        if (!response.data || response.data.length === 0) {
+                            console.warn("Data kosong atau tidak ditemukan!");
+                            dataTable.clear();
+                            dataTable.refresh();
+                            return;
+                        }
+
+                        // **Hapus semua data lama sebelum menambahkan yang baru**
                         dataTable.clear();
 
-                        // Loop data dan masukkan ke dalam tabel
-                        response.data.forEach(user => {
-                            dataTable.rows().add([
-                                user.name,
-                                user.email,
-                                user.role,
-                                `
-                <a href="/users/${user.id}/edit" class="btn btn-sm btn-outline-secondary" title="edit"><i class="ti ti-edit fs-5"></i></a>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})" title="Hapus"><i class="ti ti-trash fs-5" ></i></button>
+                        let newData = response.data.map(user => [
+                            user.name,
+                            user.email,
+                            user.role,
+                            `
+                <a href="/users/${user.id}/edit" class="btn btn-sm btn-outline-secondary" title="Edit">
+                    <i class="ti ti-edit fs-5"></i>
+                </a>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})" title="Hapus">
+                    <i class="ti ti-trash fs-5"></i>
+                </button>
                 `
-                            ]);
-                        });
+                        ]);
 
-                        // Render ulang tabel
+                        console.log("Data yang akan dimasukkan:", newData); // Debugging
+
+                        // **Tambahkan data baru ke dalam tabel**
+                        dataTable.rows().add(newData);
                         dataTable.refresh();
+
+                        console.log("Tabel berhasil diperbarui!");
                     },
                     error: function(xhr, status, error) {
+                        Notiflix.Loading.remove();
                         console.error("Gagal mengambil data:", error);
                     }
                 });
             }
 
-            // Panggil fungsi load data saat halaman dimuat
+
+
+
+
+
+
+            // **Panggil fungsi load data saat halaman dimuat**
             loadUserData();
 
             feather.replace();
+
+
         });
     </script>
 @endpush
