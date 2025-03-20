@@ -5,7 +5,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body shadow-custom">
-                    <button class="btn btn-outline-primary" title="tambah" data-bs-toggle="modal"
+                    <button class="btn btn-outline-green" title="tambah" data-bs-toggle="modal"
                         data-bs-target="#tambahAkun-modal"><i class="ti ti-plus fs-5"></i></button>
                     <div class="table-responsive">
                         <table class="table" id="users-table">
@@ -49,6 +49,77 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
+            $("form").submit(function(e) {
+                e.preventDefault(); // Mencegah refresh halaman
+
+                let password = $("input[name='password']").val();
+                let confirmPassword = $("input[name='confirmPassword']").val();
+
+                // Cek apakah password dan konfirmasi password sama
+                if (password !== confirmPassword) {
+                    Notiflix.Notify.failure("Konfirmasi password tidak cocok!");
+                    return; // Hentikan proses jika tidak cocok
+                }
+
+                let formData = {
+                    name: $("input[name='name']").val(),
+                    email: $("input[name='email']").val(),
+                    password: password, // Hanya password yang dikirim
+                    role: $("select[name='role']").val(),
+                    _token: "{{ csrf_token() }}" // Laravel CSRF token
+                };
+
+                $.ajax({
+                    url: "{{ route('operator.akun.store') }}",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    beforeSend: function() {
+                        Notiflix.Loading.standard("Menyimpan...");
+                    },
+                    success: function(response) {
+                        Notiflix.Loading.remove();
+
+                        if (response.success) { // Pastikan ini cocok dengan response backend
+                            Notiflix.Notify.success(response.message);
+                            $("form")[0].reset(); // Reset form setelah sukses
+                            $("#tambahAkun-modal").modal("hide"); // Pakai ID modal yang benar
+
+                        } else {
+                            Notiflix.Notify.failure(response.message ||
+                                "Gagal menyimpan data.");
+                        }
+                    },
+                    error: function(xhr) {
+                        Notiflix.Loading.remove();
+
+                        let errors = xhr.responseJSON.errors;
+                        if (errors) {
+                            let errorMessages = Object.values(errors).map(err => err.join(" "))
+                                .join("<br>");
+                            Notiflix.Report.failure("Gagal!", errorMessages, "Tutup");
+                        } else {
+                            Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
+                        }
+                    }
+                });
+            });
+
+
+            $(".toggle-password").click(function() {
+                let target = $($(this).attr("data-target"));
+                let icon = $(this).find("i");
+
+                if (target.attr("type") === "password") {
+                    target.attr("type", "text");
+                    icon.removeClass("ti-eye").addClass("ti-eye-off");
+                } else {
+                    target.attr("type", "password");
+                    icon.removeClass("ti-eye-off").addClass("ti-eye");
+                }
+            });
+
+
             // Inisialisasi Simple-DataTables
             const dataTable = new simpleDatatables.DataTable("#users-table", {
                 searchable: true,

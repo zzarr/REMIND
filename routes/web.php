@@ -35,6 +35,7 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
         Route::group(['prefix' => 'akun', 'as' => 'akun.'], function () {
             Route::get('/', [AkunController::class, 'index'])->name('index');
             Route::get('/data', [AkunController::class, 'data'])->name('data');
+            Route::post('/store', [AkunController::class, 'store'])->name('store');
         });
 
     });

@@ -18,4 +18,27 @@ class AkunController extends Controller
 
         return DataTables::of($data)->make(true);
     }
+
+    public function store(Request $request){
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'role' => 'required|in:operator,tim peneliti',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+        ]);
+
+        return response()->json([
+            'success' => true, // Ubah dari 'status' menjadi 'success'
+            'message' => 'Akun berhasil ditambahkan',
+        ]);
+        
+    }
 }

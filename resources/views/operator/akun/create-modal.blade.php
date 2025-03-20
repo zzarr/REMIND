@@ -2,31 +2,61 @@
     style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-healt">
-                <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Primary Modal</h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div><!--end modal-header-->
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-3 text-center align-self-center">
-                        <img src="assets/images/small/btc.png" alt="" class="img-fluid">
-                    </div><!--end col-->
-                    <div class="col-lg-9">
-                        <h5>Crypto Market Services</h5>
-                        <span class="badge bg-soft-secondary">Disable Services</span>
-                        <small class="text-muted ml-2">07 Oct 2020</small>
-                        <ul class="mt-3 mb-0">
-                            <li>Lorem Ipsum is dummy text.</li>
-                            <li>It is a long established reader.</li>
-                            <li>Contrary to popular belief, Lorem simply.</li>
-                        </ul>
-                    </div><!--end col-->
-                </div><!--end row-->
-            </div><!--end modal-body-->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-de-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-de-primary btn-sm">Save changes</button>
-            </div><!--end modal-footer-->
+            <form>
+                <div class="modal-header bg-healt">
+                    <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Tambah Akun</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div><!--end modal-header-->
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name">Nama</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
+                            placeholder="Masukkan nama" name="name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Enter email" name="email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" placeholder="Masukkan password"
+                                name="password">
+                            <button class="btn btn-outline-secondary toggle-password" type="button"
+                                data-target="#password">
+                                <i class="ti ti-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword">Konfirmasi Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword"
+                                placeholder="Konfirmasi password" name="confirmPassword">
+                            <button class="btn btn-outline-secondary toggle-password" type="button"
+                                data-target="#confirmPassword">
+                                <i class="ti ti-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nama">Role</label>
+                        <select class="form-select" aria-label="Default select example" name="role">
+                            <option value="operator">Operator</option>
+                            <option value="tim peneliti">Tim Peneliti</option>
+                        </select>
+                    </div>
+                </div><!--end modal-body-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-de-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-de-primary btn-sm">Save</button>
+                </div><!--end modal-footer-->
+            </form>
         </div><!--end modal-content-->
     </div><!--end modal-dialog-->
 </div>
