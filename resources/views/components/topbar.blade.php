@@ -15,7 +15,7 @@
                         </div>
                     </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-end">
+                <div class="dropdown-menu dropdown-menu-end" data-bs-auto-close="true">
                     <a class="dropdown-item" href="#"><i class="ti ti-user font-16 me-1 align-text-bottom"></i>
                         Profile</a>
                     <a class="dropdown-item" href="#"><i
@@ -23,12 +23,14 @@
                     <div class="dropdown-divider mb-0"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i
-                            class="ti ti-power font-16 me-1 align-text-bottom"></i> Logout</a>
+                                 document.getElementById('logout-form').submit();">
+                        <i class="ti ti-power font-16 me-1 align-text-bottom"></i> Logout
+                    </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                 </div>
+
             </li><!--end topbar-profile-->
 
         </ul><!--end topbar-nav-->

@@ -34,7 +34,7 @@
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
 
-                                    <h3 class="my-1 font-20 fw-bold ">24k</h3>
+                                    <h3 class="my-1 font-20 fw-bold ">{{ $user }}</h3>
 
                                 </div><!--end col-->
                                 <div class="col-3 align-self-center">

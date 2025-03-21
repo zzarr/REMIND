@@ -1,4 +1,5 @@
 <script src="{{ asset('libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
 <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ asset('libs/feather-icons/feather.min.js') }}"></script>
 

@@ -8,13 +8,9 @@
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button class="btn btn-outline-green" title="tambah" data-bs-toggle="modal"
                             data-bs-target="#tambahAkun-modal"><i class="ti ti-plus fs-5"></i></button>
-                        <button id="refreshButton" type="button" class="btn btn-outline-primary">
-                            <i class="ti ti-refresh"></i> Muat Ulang
-                        </button>
 
                     </div>
-                    <button class="btn btn-outline-green" title="tambah" data-bs-toggle="modal"
-                        data-bs-target="#tambahAkun-modal"><i class="ti ti-plus fs-5"></i></button>
+
                     <div class="table-responsive">
                         <table class="table" id="users-table">
                             <thead>
@@ -57,6 +53,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
+
+
             $("form").submit(function(e) {
                 e.preventDefault(); // Mencegah refresh halaman
 

@@ -83,6 +83,28 @@
 
     @include('components.script')
     @stack('script')
+    <script>
+        $(document).ready(function() {
+            document.addEventListener("click", function(event) {
+                let dropdownToggle = document.querySelector(
+                ".nav-link.dropdown-toggle"); // Pilih elemen <a> sebagai toggle
+                let dropdownMenu = document.querySelector(".dropdown-menu"); // Pilih menu dropdown
+
+                // Jika klik terjadi di luar dropdown toggle dan dropdown menu, tutup dropdown
+                if (dropdownToggle && dropdownMenu.classList.contains("show") &&
+                    !event.target.closest(".nav-link.dropdown-toggle") &&
+                    !event.target.closest(".dropdown-menu")) {
+
+                    let dropdownInstance = bootstrap.Dropdown.getInstance(dropdownToggle);
+                    if (dropdownInstance) {
+                        dropdownInstance.hide();
+                    }
+                }
+            });
+
+
+        });
+    </script>
 
 
 
