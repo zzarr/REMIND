@@ -33,7 +33,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="apps-contact-list.html"><i
+                        <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
                                 class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
                     </li>
 

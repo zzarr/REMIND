@@ -10,7 +10,7 @@ use App\Models\User;
 class DashboardController extends Controller
 {
     public function index(){
-        $user = User::count();
+        $user = User::where('role', 'tim peneliti')->count();
 
         return view('operator.dashboard', compact('user'));
     }

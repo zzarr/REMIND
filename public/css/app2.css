@@ -671,6 +671,7 @@ body.dark-sidebar .leftbar-tab-menu .main-icon-menu .main-icon-menu-body .nav.na
     height: 44px;
     border-radius: 3px;
     padding: 10px;
+    
 }
 .left-sidebar .menu-body .nav-item .nav-link .menu-icon {
     color: #1f2538;
@@ -681,9 +682,16 @@ body.dark-sidebar .leftbar-tab-menu .main-icon-menu .main-icon-menu-body .nav.na
 .left-sidebar .menu-body .nav-item .nav-link.active i {
     background-color: #0f9e99;
     margin: 5px 0px;
-   
     color: #fff !important;
 }
+.left-sidebar .menu-body .nav-item .nav-link.active{
+    padding: 10px 10px;
+}
+
+.left-sidebar .menu-body .nav-item .nav-link.active i{
+    margin-right: 8px;
+}
+
 .left-sidebar .navbar-vertical .navbar-nav {
     padding-left: 0;
 }
@@ -804,7 +812,7 @@ body.dark-sidebar .leftbar-tab-menu .main-icon-menu .main-icon-menu-body .nav.na
 .enlarge-menu .left-sidebar:hover .menu-body .nav-item .collapse.show {
     display: block;
 }
-.enlarge-menu .left-sidebar:hover .menu-body .nav-item .nav-link {
+.enlarge-menu .left-sidebar:hover .menu-body .nav-item .nav-link.active {
     padding: 10px;
 }
 .enlarge-menu .left-sidebar:hover .menu-body .nav-item .nav-link .menu-icon {
@@ -8011,25 +8019,34 @@ ul.steppedprogress li:first-child:after {
 .auth-bg {
     background: radial-gradient(
             circle at 39% 47%,
-            rgba(107, 107, 107, 0.08) 0,
-            rgba(107, 107, 107, 0.08) 33.333%,
-            rgba(72, 72, 72, 0.08) 33.333%,
-            rgba(72, 72, 72, 0.08) 66.666%,
-            rgba(36, 36, 36, 0.08) 66.666%,
-            rgba(36, 36, 36, 0.08) 99.999%
+            rgba(107, 180, 160, 0.08) 0,
+            rgba(107, 180, 160, 0.08) 33.333%,
+            rgba(72, 150, 130, 0.08) 33.333%,
+            rgba(72, 150, 130, 0.08) 66.666%,
+            rgba(36, 120, 110, 0.08) 66.666%,
+            rgba(36, 120, 110, 0.08) 99.999%
         ),
         radial-gradient(
             circle at 53% 74%,
-            rgba(182, 182, 182, 0.08) 0,
-            rgba(182, 182, 182, 0.08) 33.333%,
-            rgba(202, 202, 202, 0.08) 33.333%,
-            rgba(202, 202, 202, 0.08) 66.666%,
-            rgba(221, 221, 221, 0.08) 66.666%,
-            rgba(221, 221, 221, 0.08) 99.999%
+            rgba(182, 230, 210, 0.08) 0,
+            rgba(182, 230, 210, 0.08) 33.333%,
+            rgba(202, 255, 235, 0.08) 33.333%,
+            rgba(202, 255, 235, 0.08) 66.666%,
+            rgba(221, 255, 245, 0.08) 66.666%,
+            rgba(221, 255, 245, 0.08) 99.999%
         ),
-        radial-gradient(circle at 14% 98%, rgba(184, 184, 184, 0.08) 0, rgba(184, 184, 184, 0.08) 33.333%, rgba(96, 96, 96, 0.08) 33.333%, rgba(96, 96, 96, 0.08) 66.666%, rgba(7, 7, 7, 0.08) 66.666%, rgba(7, 7, 7, 0.08) 99.999%),
-        linear-gradient(45deg, #f79f9b, #0f4069);
+        radial-gradient(
+            circle at 14% 98%,
+            rgba(184, 250, 230, 0.08) 0,
+            rgba(184, 250, 230, 0.08) 33.333%,
+            rgba(96, 200, 180, 0.08) 33.333%,
+            rgba(96, 200, 180, 0.08) 66.666%,
+            rgba(7, 150, 130, 0.08) 66.666%,
+            rgba(7, 150, 130, 0.08) 99.999%
+        ),
+        linear-gradient(45deg, #0F9E99, #063D3A);
 }
+
 .ex-page-content h1 {
     font-size: 98px;
     font-weight: 700;

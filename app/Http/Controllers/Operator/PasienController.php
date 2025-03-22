@@ -5,42 +5,44 @@ namespace App\Http\Controllers\Operator;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Pasien;
 
-class AkunController extends Controller
+class PasienController extends Controller
 {
-    public function index(){
-        return view('operator.akun.index');
+    public function index()
+    {
+        return view('operator.pasien.index');
     }
 
     public function data(){
-        $data = User::get();
+        $data = Pasien::get();
 
         return DataTables::of($data)->make(true);
     }
 
     public function store(Request $request){
 
+        // Validasi data yang diterima dari permintaan
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'nama' => 'required',
+            'usia' => 'required',
+            'jenis_kelamin' => 'required',
         ]);
 
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => $request->role,
+        // Simpan data ke dalam database
+       Pasien::create([
+            'nama' => $request->nama,
+            'usia' => $request->usia,
+            'jenis_kelamin' => $request->jenis_kelamin,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+        // return response JSON dengan pesan sukses
         return response()->json([
             'success' => true, // Ubah dari 'status' menjadi 'success'
             'message' => 'Akun berhasil ditambahkan',
         ]);
-        
+
     }
 }

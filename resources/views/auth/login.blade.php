@@ -95,7 +95,7 @@
                             </div><!--end card-->
                         </div><!--end col-->
                         <div class="col-md-7 col-xl-9 col-lg-8  p-0 vh-100 d-flex justify-content-center auth-bg">
-                            <div class="accountbg d-flex align-items-center">
+                            <div class="d-flex align-items-center">
                                 <div class="account-title text-center text-white">
                                     <img src="assets/images/logo-sm.png" alt="" class="thumb-sm">
                                     <h4 class="mt-3 text-white">Welcome To <span class="text-warning">REMAIN</span>

@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Operator\{
     DashboardController as OperatorDashboardController,
-    AkunController
+    AkunController,
+    PasienController,
 };
 
 /*
@@ -36,6 +37,12 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
             Route::get('/', [AkunController::class, 'index'])->name('index');
             Route::get('/data', [AkunController::class, 'data'])->name('data');
             Route::post('/store', [AkunController::class, 'store'])->name('store');
+        });
+
+        Route::group(['prefix' => 'pasien', 'as' => 'pasien.'], function () {
+            Route::get('/', [PasienController::class, 'index'])->name('index');
+            Route::get('/data', [PasienController::class, 'data'])->name('data');
+            Route::post('/store', [PasienController::class, 'store'])->name('store');
         });
 
     });
