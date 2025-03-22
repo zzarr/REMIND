@@ -38,7 +38,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="apps-contact-list.html"><i
+                        <a class="nav-link" href="{{ route('operator.kuisioner.index') }}"><i
                                 class="ti ti-clipboard menu-icon"></i><span>Kuisioner</span></a>
                     </li>
 

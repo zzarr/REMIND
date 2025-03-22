@@ -13,6 +13,7 @@ class Kuisioner extends Model
 
     protected $fillable = [
         'pertanyaan',
+        'is_positive'
     ];
 
     public function jawaban(){

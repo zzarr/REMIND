@@ -6,6 +6,7 @@ use App\Http\Controllers\Operator\{
     DashboardController as OperatorDashboardController,
     AkunController,
     PasienController,
+    KuisionerController
 };
 
 /*
@@ -45,6 +46,12 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
             Route::post('/store', [PasienController::class, 'store'])->name('store');
         });
 
+        Route::group(['prefix' => 'kuisioner', 'as' => 'kuisioner.'], function () {
+            Route::get('/', [KuisionerController::class, 'index'])->name('index');
+            Route::get('/data', [KuisionerController::class, 'data'])->name('data');
+            Route::post('/store', [KuisionerController::class, 'store'])->name('store');
+          
+        });
     });
 
 });

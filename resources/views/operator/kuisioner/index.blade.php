@@ -1,23 +1,23 @@
 @extends('operator.layout.app')
-@section('title', 'Pasien')
+@section('title', 'Kuisioner')
+
 @section('content')
     <div class="row justify-content-center align-items-center g-2">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body shadow-custom">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <button class="btn btn-outline-green" title="tambah" data-bs-toggle="modal"
-                            data-bs-target="#tambahPasien-modal"><i class="ti ti-plus fs-5"></i></button>
+                        <button class="btn btn-outline-green shadow-custom" title="tambah" data-bs-toggle="modal"
+                            data-bs-target="#tambahKuisioner-modal"><i class="ti ti-plus fs-5"></i></button>
 
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table" id="pasien-table">
+                        <table class="table" id="kuisioner-table">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Usia</th>
-                                    <th>Jenis Kelamin</th>
+                                    <th>No</th>
+                                    <th>Soal</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -33,16 +33,26 @@
 
     </div>
 
-    @include('operator.pasien.create-modal')
+    @include('operator.kuisioner.create-modal')
 @endsection
+
 @push('css')
     <link rel="stylesheet" href="{{ asset('libs/table/datatable/datatables.css') }}">
     <!-- <link rel="stylesheet" href="{{ asset('libs/table/datatable/dt-global_style.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('libs/simple-datatables/style.css') }}">
+    <style>
+        #kuisioner-table th:first-child,
+        #kuisioner-table td:first-child,
+        #kuisioner-table th:last-child,
+        #kuisioner-table td:last-child {
+            width: 100px;
+            /* Ubah sesuai kebutuhan */
+            text-align: center;
+        }
+    </style>
 
     <!-- DataTables CSS -->
 @endpush
-
 
 @push('script')
     <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
@@ -59,14 +69,13 @@
 
 
                 let formData = {
-                    nama: $("input[name='nama']").val(),
-                    usia: $("input[name='usia']").val(),
-                    jenis_kelamin: $("select[name='jenis_kelamin']").val(),
+                    pertanyaan: $("textarea[name='pertanyaan']").val(),
+                    is_positive: $("select[name='is_positive']").val(),
                     _token: "{{ csrf_token() }}"
                 };
 
                 $.ajax({
-                    url: "{{ route('operator.pasien.store') }}",
+                    url: "{{ route('operator.kuisioner.store') }}",
                     type: "POST",
                     data: formData,
                     dataType: "json",
@@ -79,7 +88,7 @@
                         if (response.success) {
                             Notiflix.Notify.success(response.message);
                             $("form")[0].reset();
-                            $("#tambahPasien-modal").modal("hide");
+                            $("#tambahKuisioner-modal").modal("hide");
                             window.location.reload();
 
                         } else {
@@ -103,7 +112,7 @@
             });
 
             // Inisialisasi Simple-DataTables
-            const dataTable = new simpleDatatables.DataTable("#pasien-table", {
+            const dataTable = new simpleDatatables.DataTable("#kuisioner-table", {
                 searchable: true,
                 fixedHeight: false,
                 perPage: 5,
@@ -119,9 +128,9 @@
             });
 
             // **Fungsi untuk me-load ulang data tabel setelah perubahan**
-            function loadUserData() {
+            function loadData() {
                 $.ajax({
-                    url: "{{ route('operator.pasien.data') }}", // Sesuaikan dengan route API-mu
+                    url: "{{ route('operator.kuisioner.data') }}", // Sesuaikan dengan route API-mu
                     method: "GET",
                     dataType: "json",
                     beforeSend: function() {
@@ -142,15 +151,14 @@
                         // **Hapus semua data lama sebelum menambahkan yang baru**
                         dataTable.clear();
 
-                        let newData = response.data.map(pasien => [
-                            pasien.nama,
-                            pasien.usia.toString(),
-                            pasien.jenis_kelamin,
+                        let newData = response.data.map((kuisioner, index) => [
+                            (index + 1).toString(), // No (increment otomatis)
+                            kuisioner.pertanyaan, // Soal
                             `
-                <a href="/users/${pasien.id}/edit" class="btn btn-sm btn-outline-secondary" title="Edit">
+                <a href="/kuisioner/${kuisioner.id}/edit" class="btn btn-sm btn-outline-secondary" title="Edit">
                     <i class="ti ti-edit fs-5"></i>
                 </a>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${pasien.id})" title="Hapus">
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteKuisioner(${kuisioner.id})" title="Hapus">
                     <i class="ti ti-trash fs-5"></i>
                 </button>
                 `
@@ -171,9 +179,9 @@
                 });
             }
 
-            // **Panggil fungsi load data saat halaman dimuat**
-            loadUserData();
 
+            // **Panggil fungsi load data saat halaman dimuat**
+            loadData();
         });
     </script>
 @endpush
