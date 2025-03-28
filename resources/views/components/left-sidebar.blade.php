@@ -19,29 +19,47 @@
                 <ul class="navbar-nav">
                     <li class="menu-label mt-0"><i class="ti ti-letter-m"></i><span>ain</span></li>
                     <hr>
+                    <!-- Menu ini hanya untuk role 'operator' -->
+                    @if (Auth::check() && Auth::user()->role === 'operator')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.dashboard') }}"><i
+                                    class="ti ti-home menu-icon"></i><span>Dashboard</span></a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.akun.index') }}"><i
+                                    class="ti ti-user menu-icon"></i><span>Akun
+                                    Tim </span></a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('operator.dashboard') }}"><i
-                                class="ti ti-home menu-icon"></i><span>Dashboard</span></a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
+                                    class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('operator.akun.index') }}"><i
-                                class="ti ti-user menu-icon"></i><span>Akun
-                                Tim </span></a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.kuisioner.index') }}"><i
+                                    class="ti ti-clipboard menu-icon"></i><span>Kuisioner</span></a>
+                        </li>
+                    @endif
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
-                                class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
-                    </li>
+                    <!-- Menu ini hanya untuk role 'tim peneliti' -->
+                    @if (Auth::check() && Auth::user()->role === 'tim peneliti')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('tim_peneliti.dashboard') }}"><i
+                                    class="ti ti-home menu-icon"></i><span>Dashboard</span></a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('operator.kuisioner.index') }}"><i
-                                class="ti ti-clipboard menu-icon"></i><span>Kuisioner</span></a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
+                                    class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
+                                    class="ti ti-file-report menu-icon"></i><span>Hasil Test</span></a>
+                        </li>
+                    @endif
 
                 </ul><!--end navbar-nav--->
             </div><!--end sidebarCollapse-->

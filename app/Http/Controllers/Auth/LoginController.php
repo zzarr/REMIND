@@ -51,8 +51,8 @@ class LoginController extends Controller
     {
         if ($user->role == 'operator') {
             return redirect()->route('operator.dashboard'); // Redirect operator ke dashboard khusus
-        } else {
-            return redirect('/home'); // Redirect default untuk tim peneliti
+        } else if ($user->role == 'tim peneliti') {
+            return redirect()->route('tim_peneliti.dashboard'); // Redirect default untuk tim peneliti
         }
     }
 }

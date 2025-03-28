@@ -9,6 +9,11 @@ use App\Http\Controllers\Operator\{
     KuisionerController
 };
 
+use App\Http\Controllers\TimPeneliti\{
+    DashboardController as TimPenelitiDasboardController,
+
+};
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,13 +63,11 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
 
 
 //route untuk tim peneliti
-Route::middleware(['auth', 'role:tim penelii'])->group(function () {
+Route::middleware(['auth', 'role:tim peneliti'])->group(function () {
 
     Route::group(['prefix' => 'tim_peneliti', 'as' => 'tim_peneliti.'], function () {
 
-        Route::get('/dashboard', function () {
-            return view('tim_peneliti.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [TimPenelitiDasboardController::class, 'index'])->name('dashboard');
 
 
     });
@@ -74,4 +77,4 @@ Route::middleware(['auth', 'role:tim penelii'])->group(function () {
 
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
