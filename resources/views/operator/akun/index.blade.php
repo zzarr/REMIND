@@ -6,6 +6,7 @@
             <div class="card">
                 <div class="card-body shadow-custom">
                     <div class="btn-group" role="group" aria-label="Basic example">
+
                         <button class="btn btn-outline-green" title="tambah" data-bs-toggle="modal"
                             data-bs-target="#tambahAkun-modal"><i class="ti ti-plus fs-5"></i></button>
 
@@ -34,6 +35,7 @@
     </div>
 
     @include('operator.akun.create-modal')
+    @include('operator.akun.edit-modal')
 
 @endsection
 
@@ -47,10 +49,11 @@
 
 @push('script')
     <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
+    <!-- DataTables JS -->
+    <!--<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> -->
     <script src="{{ asset('libs/simple-datatables/umd/simple-datatables.js') }}"></script>
 
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
     <script>
         $(document).ready(function() {
 
@@ -172,13 +175,15 @@
                             user.email,
                             user.role,
                             `
-                <a href="/users/${user.id}/edit" class="btn btn-sm btn-outline-secondary" title="Edit">
-                    <i class="ti ti-edit fs-5"></i>
-                </a>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${user.id})" title="Hapus">
-                    <i class="ti ti-trash fs-5"></i>
-                </button>
-                `
+                                <a href="#" class="btn btn-sm btn-outline-secondary edit-btn" data-id="${user.id}" title="Edit">
+                                    <i class="ti ti-edit fs-5"></i>
+                                </a>
+
+                               <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-delete-user text-danger" data-id="${user.id}" title="Hapus">
+    <i class="ti ti-trash fs-5"></i>
+</a>
+
+                            `
                         ]);
 
                         console.log("Data yang akan dimasukkan:", newData); // Debugging
@@ -197,15 +202,146 @@
             }
 
 
-
-
-
-
-
             // **Panggil fungsi load data saat halaman dimuat**
             loadUserData();
 
             feather.replace();
+
+            $(document).on("click", ".edit-btn", function() {
+                var userId = $(this).data("id"); // Ambil ID dari tombol
+
+                $.ajax({
+                    url: "/operator/akun/edit/" + userId, // Route untuk mengambil data
+                    type: "GET",
+                    success: function(data) {
+                        $("#edit-id").val(data.id);
+                        $("#edit-name").val(data.name);
+                        $("#edit-email").val(data.email);
+                        $('#edit-password, #edit-confirmPassword').val(
+                            ''); // Mengosongkan input password dan konfirmasi
+                        $("#edit-role").val(data.role);
+                        $("#editAkun-modal").modal("show"); // Tampilkan modal
+                    },
+                    error: function() {
+                        alert("Gagal mengambil data akun!");
+                    }
+                });
+            });
+
+            $("#editAkunForm").submit(function(e) {
+                e.preventDefault(); // Mencegah refresh halaman
+
+                let password = $("#edit-password").val().trim();
+                let confirmPassword = $("#edit-confirmPassword").val().trim();
+                console.log("Password:", password);
+
+                // Validasi hanya berjalan jika salah satu password diisi
+                if (password !== "" || confirmPassword !== "") {
+                    if (password === "" || confirmPassword === "") {
+                        Notiflix.Notify.failure("Mohon isi kedua kolom password.");
+                        return;
+                    }
+                    if (password !== confirmPassword) {
+                        Notiflix.Notify.failure("Konfirmasi password tidak cocok!");
+                        return;
+                    }
+                } else {
+                    password = null; // Tidak mengirim password jika tidak diisi
+                }
+
+                let formData = {
+                    id: $("#edit-id").val(),
+                    name: $("#edit-name").val(),
+                    email: $("#edit-email").val(),
+                    role: $("#edit-role").val(),
+                    password: password, // Password hanya dikirim jika diisi
+                    _token: "{{ csrf_token() }}"
+                };
+
+                $.ajax({
+                    url: "/operator/akun/update/" + formData.id,
+                    type: "PUT",
+                    data: formData,
+                    dataType: "json",
+                    beforeSend: function() {
+                        Notiflix.Loading.standard("Menyimpan...");
+                    },
+                    success: function(response) {
+                        Notiflix.Loading.remove();
+
+                        if (response.success) {
+                            Notiflix.Notify.success(response.message);
+                            $("#editAkunForm")[0].reset(); // Reset form
+                            $("#editAkun-modal").modal("hide"); // Tutup modal
+                            $("#dataTable").dataTable.refresh(); // Reload tabel
+                        } else {
+                            Notiflix.Notify.failure(response.message ||
+                                "Gagal menyimpan data.");
+                        }
+                    },
+                    error: function(xhr) {
+                        Notiflix.Loading.remove();
+
+                        let errors = xhr.responseJSON.errors;
+                        if (errors) {
+                            let errorMessages = Object.values(errors).map(err => err.join(" "))
+                                .join("<br>");
+                            Notiflix.Report.failure("Gagal!", errorMessages, "Tutup");
+                        } else {
+                            Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
+                        }
+                    }
+                });
+            });
+
+            $(document).on("click", ".btn-delete-user", function() {
+                let userId = $(this).data("id");
+                deleteUser(userId);
+            });
+
+
+
+
+
+            function deleteUser(userId) {
+                Notiflix.Confirm.show(
+                    "Konfirmasi",
+                    "Apakah Anda yakin ingin menghapus pengguna ini?",
+                    "Ya, Hapus",
+                    "Batal",
+                    function okCallback() {
+                        $.ajax({
+                            url: `/operator/akun/delete/${userId}`, // Endpoint hapus
+                            type: "DELETE",
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr("content")
+                            }, // Token CSRF
+                            beforeSend: function() {
+                                Notiflix.Loading.standard("Menghapus...");
+                            },
+                            success: function(response) {
+                                Notiflix.Loading.remove();
+                                if (response.success) {
+                                    Notiflix.Notify.success(response.message);
+                                    $("#dataTable").DataTable().ajax.reload(); // Refresh tabel
+                                } else {
+                                    Notiflix.Notify.failure(response.message ||
+                                        "Gagal menghapus data.");
+                                }
+                            },
+                            error: function() {
+                                Notiflix.Loading.remove();
+                                Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
+                            },
+                        });
+                    }
+                );
+            }
+
+
+
+
+
 
 
         });

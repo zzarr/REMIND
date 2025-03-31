@@ -7,6 +7,8 @@
     <meta charset="utf-8" />
     <title>REMAIN | @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -87,7 +89,7 @@
         $(document).ready(function() {
             document.addEventListener("click", function(event) {
                 let dropdownToggle = document.querySelector(
-                ".nav-link.dropdown-toggle"); // Pilih elemen <a> sebagai toggle
+                    ".nav-link.dropdown-toggle"); // Pilih elemen <a> sebagai toggle
                 let dropdownMenu = document.querySelector(".dropdown-menu"); // Pilih menu dropdown
 
                 // Jika klik terjadi di luar dropdown toggle dan dropdown menu, tutup dropdown

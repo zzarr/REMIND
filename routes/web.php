@@ -43,6 +43,9 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
             Route::get('/', [AkunController::class, 'index'])->name('index');
             Route::get('/data', [AkunController::class, 'data'])->name('data');
             Route::post('/store', [AkunController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [AkunController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [AkunController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [AkunController::class, 'destroy'])->name('delete');
         });
 
         Route::group(['prefix' => 'pasien', 'as' => 'pasien.'], function () {
