@@ -45,4 +45,32 @@ class PasienController extends Controller
         ]);
 
     }
+
+    public function edit($id)
+    {
+        $pasien = Pasien::findOrFail($id);
+
+        return response()->json([
+            'id' => $pasien->id,
+            'nama' => $pasien->nama,
+            'usia' => $pasien->usia,
+            'jenis_kelamin' => $pasien->jenis_kelamin,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+    
+
+        $pasien = Pasien::findOrFail($id);
+        $pasien->nama = $request->nama;
+        $pasien->usia = $request->usia;
+        $pasien->jenis_kelamin = $request->jenis_kelamin;
+        $pasien->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data pasien berhasil diperbarui.',
+        ]);
+    }
 }

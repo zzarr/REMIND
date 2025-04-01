@@ -55,7 +55,6 @@ class AkunController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:6|confirmed', // "confirmed" harus cocok dengan confirm_password
         ]);
     
         // ✅ 2. Cek apakah user ada
@@ -70,11 +69,7 @@ class AkunController extends Controller
         // ✅ 3. Update data user
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
-    
-        // ✅ 4. Update password hanya jika diisi
-        if (!empty($validatedData['password'])) {
-            $user->password = bcrypt($validatedData['password']);
-        }
+
     
         $user->save();
     

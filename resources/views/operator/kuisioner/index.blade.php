@@ -34,6 +34,7 @@
     </div>
 
     @include('operator.kuisioner.create-modal')
+    @include('operator.kuisioner.edit-modal')
 @endsection
 
 @push('css')
@@ -60,6 +61,8 @@
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
 
     <script>
         $(document).ready(function() {
@@ -155,9 +158,9 @@
                             (index + 1).toString(), // No (increment otomatis)
                             kuisioner.pertanyaan, // Soal
                             `
-                <a href="/kuisioner/${kuisioner.id}/edit" class="btn btn-sm btn-outline-secondary" title="Edit">
-                    <i class="ti ti-edit fs-5"></i>
-                </a>
+                <a href="#" class="btn btn-sm btn-outline-secondary edit-btn" data-id="${kuisioner.id}" title="Edit">
+                                    <i class="ti ti-edit fs-5"></i>
+                                </a>
                 <button class="btn btn-sm btn-outline-danger" onclick="deleteKuisioner(${kuisioner.id})" title="Hapus">
                     <i class="ti ti-trash fs-5"></i>
                 </button>
@@ -182,6 +185,67 @@
 
             // **Panggil fungsi load data saat halaman dimuat**
             loadData();
+
+            $(document).on('click', '.edit-btn', function() {
+                let kuisionerId = $(this).data('id');
+
+                $.ajax({
+                    url: `/operator/kuisioner/edit/${kuisionerId}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+
+                        $('#edit-pertanyaan').val(data.pertanyaan);
+                        $('select[name="edit-is_positive"]').val(data.is_positive ?
+                            'true' : 'false');
+                        // Set ID ke modal agar bisa digunakan saat submit
+                        $('#editKuisioner-modal').data('id', kuisionerId);
+
+                        // Debugging: Pastikan modal dipanggil
+                        console.log("Modal akan dibuka");
+
+                        // Buka modal
+                        $('#editKuisioner-modal').modal('show');
+
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan saat mengambil data.');
+                    }
+                });
+            });
+
+            $(document).on('submit', '#editKuisioner-form', function(e) {
+                e.preventDefault(); // Mencegah form dari reload halaman
+
+                let kuisionerId = $('#editKuisioner-modal').data('id'); // Ambil ID dari modal
+                let formData = {
+                    pertanyaan: $('#edit-pertanyaan').val(), // Ambil nilai dari textarea
+                    is_positive: $('select[name="edit-is_positive"]').val(),
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                };
+
+
+                $.ajax({
+                    url: `/operator/kuisioner/update/${kuisionerId}`, // Endpoint Laravel
+                    type: 'PUT',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Data berhasil diperbarui!');
+                            $('#editKuisioner-modal').modal('hide'); // Tutup modal
+                            location.reload(); // Reload halaman untuk update data
+                        } else {
+                            alert('Gagal memperbarui data.');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('Terjadi kesalahan saat mengupdate data.');
+                        console.log(xhr.responseText); // Debugging error
+                    }
+                });
+            });
+
         });
     </script>
 @endpush

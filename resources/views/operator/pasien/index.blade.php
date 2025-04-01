@@ -34,6 +34,7 @@
     </div>
 
     @include('operator.pasien.create-modal')
+    @include('operator.pasien.edit-modal')
 @endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('libs/table/datatable/datatables.css') }}">
@@ -53,56 +54,6 @@
 
     <script>
         $(document).ready(function() {
-
-            $("form").submit(function(e) {
-                e.preventDefault(); // Mencegah refresh halaman
-
-
-                let formData = {
-                    nama: $("input[name='nama']").val(),
-                    usia: $("input[name='usia']").val(),
-                    jenis_kelamin: $("select[name='jenis_kelamin']").val(),
-                    _token: "{{ csrf_token() }}"
-                };
-
-                $.ajax({
-                    url: "{{ route('operator.pasien.store') }}",
-                    type: "POST",
-                    data: formData,
-                    dataType: "json",
-                    beforeSend: function() {
-                        Notiflix.Loading.standard("Menyimpan...");
-                    },
-                    success: function(response) {
-                        Notiflix.Loading.remove();
-
-                        if (response.success) {
-                            Notiflix.Notify.success(response.message);
-                            $("form")[0].reset();
-                            $("#tambahPasien-modal").modal("hide");
-                            window.location.reload();
-
-                        } else {
-                            Notiflix.Notify.failure(response.message ||
-                                "Gagal menyimpan data.");
-                        }
-                    },
-                    error: function(xhr) {
-                        Notiflix.Loading.remove();
-
-                        let errors = xhr.responseJSON.errors;
-                        if (errors) {
-                            let errorMessages = Object.values(errors).map(err => err.join(" "))
-                                .join("<br>");
-                            Notiflix.Report.failure("Gagal!", errorMessages, "Tutup");
-                        } else {
-                            Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
-                        }
-                    }
-                });
-            });
-
-            // Inisialisasi Simple-DataTables
             const dataTable = new simpleDatatables.DataTable("#pasien-table", {
                 searchable: true,
                 fixedHeight: false,
@@ -118,62 +69,154 @@
                 }
             });
 
-            // **Fungsi untuk me-load ulang data tabel setelah perubahan**
             function loadUserData() {
                 $.ajax({
-                    url: "{{ route('operator.pasien.data') }}", // Sesuaikan dengan route API-mu
+                    url: "{{ route('operator.pasien.data') }}",
                     method: "GET",
                     dataType: "json",
                     beforeSend: function() {
-                        Notiflix.Loading.standard("Memuat data...");
-                        console.log("Memulai request baru...");
+                        console.log("Memuat data...");
                     },
                     success: function(response) {
-                        Notiflix.Loading.remove();
-                        console.log("Data dari server:", response); // Debugging
-
                         if (!response.data || response.data.length === 0) {
-                            console.warn("Data kosong atau tidak ditemukan!");
                             dataTable.clear();
                             dataTable.refresh();
                             return;
                         }
-
-                        // **Hapus semua data lama sebelum menambahkan yang baru**
                         dataTable.clear();
-
                         let newData = response.data.map(pasien => [
                             pasien.nama,
                             pasien.usia.toString(),
                             pasien.jenis_kelamin,
                             `
-                <a href="/users/${pasien.id}/edit" class="btn btn-sm btn-outline-secondary" title="Edit">
-                    <i class="ti ti-edit fs-5"></i>
-                </a>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${pasien.id})" title="Hapus">
-                    <i class="ti ti-trash fs-5"></i>
-                </button>
-                `
+                        <a href="#" class="btn btn-sm btn-outline-secondary edit-btn" data-id="${pasien.id}" title="Edit">
+                            <i class="ti ti-edit fs-5"></i>
+                        </a>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${pasien.id})" title="Hapus">
+                            <i class="ti ti-trash fs-5"></i>
+                        </button>
+                    `
                         ]);
-
-                        console.log("Data yang akan dimasukkan:", newData); // Debugging
-
-                        // **Tambahkan data baru ke dalam tabel**
                         dataTable.rows().add(newData);
                         dataTable.refresh();
-
-                        console.log("Tabel berhasil diperbarui!");
                     },
                     error: function(xhr, status, error) {
-                        Notiflix.Loading.remove();
                         console.error("Gagal mengambil data:", error);
                     }
                 });
             }
 
-            // **Panggil fungsi load data saat halaman dimuat**
             loadUserData();
 
+            $("form").submit(function(e) {
+                e.preventDefault();
+
+                let formData = {
+                    nama: $("input[name='nama']").val(),
+                    usia: $("input[name='usia']").val(),
+                    jenis_kelamin: $("select[name='jenis_kelamin']").val(),
+                    _token: "{{ csrf_token() }}"
+                };
+
+                $.ajax({
+                    url: "{{ route('operator.pasien.store') }}",
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    beforeSend: function() {
+                        console.log("Menyimpan data...");
+                    },
+                    success: function(response) {
+                        if (!response.success) {
+                            alert(response.message || "Gagal menyimpan data.");
+                            return;
+                        }
+                        alert("Data berhasil disimpan!");
+                        $("form")[0].reset();
+                        $("#tambahPasien-modal").modal("hide");
+                        loadUserData();
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        if (errors) {
+                            let errorMessages = Object.values(errors).map(err => err.join(" "))
+                                .join("\n");
+                            alert("Gagal!\n" + errorMessages);
+                        } else {
+                            alert("Terjadi kesalahan. Coba lagi.");
+                        }
+                    }
+                });
+            });
+
+            $(document).on("click", ".edit-btn", function() {
+                var userId = $(this).data("id");
+                $.ajax({
+                    url: `/operator/pasien/edit/${userId}`,
+                    type: "GET",
+                    success: function(data) {
+                        $("#edit-id").val(data.id);
+                        $("#edit-nama").val(data.nama);
+                        $("#edit-usia").val(data.usia);
+                        $("#edit-jenis_kelamin").val(data.jenis_kelamin);
+                        $("#editPasien-modal").modal("show");
+                    },
+                    error: function() {
+                        alert("Gagal mengambil data pasien!");
+                    }
+                });
+            });
+
+            $(document).on("submit", "#editPasienForm", function(e) {
+                e.preventDefault(); // Mencegah refresh halaman
+
+                let formData = new FormData();
+                formData.append("nama", $("#edit-nama").val());
+                formData.append("usia", $("#edit-usia").val());
+                formData.append("jenis_kelamin", $("#edit-jenis_kelamin").val());
+                formData.append("_method", "PUT"); // Laravel akan mengenali ini sebagai PUT
+
+                $.ajax({
+                    url: `/operator/pasien/update/${$("#edit-id").val()}`,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    beforeSend: function() {
+                        Notiflix.Loading.standard("Menyimpan...");
+                    },
+                    success: function(response) {
+                        Notiflix.Loading.remove();
+
+                        if (!response.success) {
+                            Notiflix.Notify.failure(response.message ||
+                                "Gagal memperbarui data.");
+                            return;
+                        }
+                        Notiflix.Notify.success("Data berhasil diperbarui!");
+                        $("#editPasienForm")[0].reset();
+                        $("#editPasien-modal").modal("hide");
+                        $("#dataTable").DataTable().ajax
+                            .reload(); // Reload tabel dengan data terbaru
+                    },
+                    error: function(xhr) {
+                        Notiflix.Loading.remove();
+
+                        let errors = xhr.responseJSON?.errors;
+                        if (errors) {
+                            let errorMessages = Object.values(errors).map(err => err.join(" "))
+                                .join("<br>");
+                            Notiflix.Report.failure("Gagal!", errorMessages, "Tutup");
+                        } else {
+                            Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endpush

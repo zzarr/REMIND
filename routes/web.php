@@ -52,12 +52,17 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
             Route::get('/', [PasienController::class, 'index'])->name('index');
             Route::get('/data', [PasienController::class, 'data'])->name('data');
             Route::post('/store', [PasienController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [PasienController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [PasienController::class, 'update'])->name('update');
         });
 
         Route::group(['prefix' => 'kuisioner', 'as' => 'kuisioner.'], function () {
             Route::get('/', [KuisionerController::class, 'index'])->name('index');
             Route::get('/data', [KuisionerController::class, 'data'])->name('data');
             Route::post('/store', [KuisionerController::class, 'store'])->name('store');
+            Route::get('/edit/{id}', [KuisionerController::class, 'edit'])->name('edit');
+            Route::put('/update/{id}', [KuisionerController::class, 'update'])->name('update');
+            
           
         });
     });

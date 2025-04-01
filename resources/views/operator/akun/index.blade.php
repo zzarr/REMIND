@@ -43,6 +43,8 @@
     <link rel="stylesheet" href="{{ asset('libs/table/datatable/datatables.css') }}">
     <!-- <link rel="stylesheet" href="{{ asset('libs/table/datatable/dt-global_style.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('libs/simple-datatables/style.css') }}">
+    <!-- notiflix -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.6.min.css" />
 
     <!-- DataTables CSS -->
 @endpush
@@ -231,30 +233,14 @@
             $("#editAkunForm").submit(function(e) {
                 e.preventDefault(); // Mencegah refresh halaman
 
-                let password = $("#edit-password").val().trim();
-                let confirmPassword = $("#edit-confirmPassword").val().trim();
-                console.log("Password:", password);
 
-                // Validasi hanya berjalan jika salah satu password diisi
-                if (password !== "" || confirmPassword !== "") {
-                    if (password === "" || confirmPassword === "") {
-                        Notiflix.Notify.failure("Mohon isi kedua kolom password.");
-                        return;
-                    }
-                    if (password !== confirmPassword) {
-                        Notiflix.Notify.failure("Konfirmasi password tidak cocok!");
-                        return;
-                    }
-                } else {
-                    password = null; // Tidak mengirim password jika tidak diisi
-                }
 
                 let formData = {
                     id: $("#edit-id").val(),
                     name: $("#edit-name").val(),
                     email: $("#edit-email").val(),
                     role: $("#edit-role").val(),
-                    password: password, // Password hanya dikirim jika diisi
+
                     _token: "{{ csrf_token() }}"
                 };
 
@@ -274,6 +260,7 @@
                             $("#editAkunForm")[0].reset(); // Reset form
                             $("#editAkun-modal").modal("hide"); // Tutup modal
                             $("#dataTable").dataTable.refresh(); // Reload tabel
+                            window.location.reload();
                         } else {
                             Notiflix.Notify.failure(response.message ||
                                 "Gagal menyimpan data.");
@@ -297,10 +284,8 @@
             $(document).on("click", ".btn-delete-user", function() {
                 let userId = $(this).data("id");
                 deleteUser(userId);
+
             });
-
-
-
 
 
             function deleteUser(userId) {
@@ -337,13 +322,6 @@
                     }
                 );
             }
-
-
-
-
-
-
-
         });
     </script>
 @endpush

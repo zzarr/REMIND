@@ -41,4 +41,28 @@ class KuisionerController extends Controller
             'message' => 'Akun berhasil ditambahkan',
         ]);
     }
+
+    public function edit($id){
+        $data = Kuisioner::findOrFail($id);
+        return response()->json($data);
+    }
+
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'pertanyaan' => 'required|string',
+        'is_positive' => 'required|in:true,false',
+    ]);
+
+    $kuisioner = Kuisioner::find($id);
+    if (!$kuisioner) {
+        return response()->json(['success' => false, 'message' => 'Kuisioner tidak ditemukan'], 404);
+    }
+
+    $kuisioner->pertanyaan = $request->pertanyaan;
+    $kuisioner->is_positive = $request->is_positive === 'true'; // Konversi ke boolean
+    $kuisioner->save();
+
+    return response()->json(['success' => true, 'message' => 'Kuisioner berhasil diperbarui']);
+}
 }
