@@ -73,4 +73,13 @@ class PasienController extends Controller
             'message' => 'Data pasien berhasil diperbarui.',
         ]);
     }
+
+    public function destroy($id){
+        $pasien = Pasien::findOrFail($id);
+        $pasien->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Data pasien berhasil dihapus.',
+        ]);
+    }
 }

@@ -40,7 +40,8 @@
     <link rel="stylesheet" href="{{ asset('libs/table/datatable/datatables.css') }}">
     <!-- <link rel="stylesheet" href="{{ asset('libs/table/datatable/dt-global_style.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('libs/simple-datatables/style.css') }}">
-
+    <!-- notiflix -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.6.min.css" />
     <!-- DataTables CSS -->
 @endpush
 
@@ -92,9 +93,9 @@
                         <a href="#" class="btn btn-sm btn-outline-secondary edit-btn" data-id="${pasien.id}" title="Edit">
                             <i class="ti ti-edit fs-5"></i>
                         </a>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deleteUser(${pasien.id})" title="Hapus">
-                            <i class="ti ti-trash fs-5"></i>
-                        </button>
+                         <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-delete-user text-danger" data-id="${pasien.id}" title="Hapus">
+    <i class="ti ti-trash fs-5"></i>
+</a>
                     `
                         ]);
                         dataTable.rows().add(newData);
@@ -108,7 +109,7 @@
 
             loadUserData();
 
-            $("form").submit(function(e) {
+            $("#tambahPasien-form").submit(function(e) {
                 e.preventDefault();
 
                 let formData = {
@@ -217,6 +218,50 @@
                     }
                 });
             });
+
+            $(document).on("click", ".btn-delete-user", function() {
+                let pasienId = $(this).data("id");
+                deleteUser(pasienId);
+
+            });
+
+
+            function deleteUser(pasienId) {
+                Notiflix.Confirm.show(
+                    "Konfirmasi",
+                    "Apakah Anda yakin ingin menghapus pengguna ini?",
+                    "Ya, Hapus",
+                    "Batal",
+                    function okCallback() {
+                        $.ajax({
+                            url: `/operator/pasien/delete/${pasienId}`, // Endpoint hapus
+                            type: "DELETE",
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr("content")
+                            }, // Token CSRF
+                            beforeSend: function() {
+                                Notiflix.Loading.standard("Menghapus...");
+                            },
+                            success: function(response) {
+                                Notiflix.Loading.remove();
+                                if (response.success) {
+                                    Notiflix.Notify.success(response.message);
+                                    $("#dataTable").DataTable().ajax.reload(); // Refresh tabel
+                                    window.location.reload();
+                                } else {
+                                    Notiflix.Notify.failure(response.message ||
+                                        "Gagal menghapus data.");
+                                }
+                            },
+                            error: function() {
+                                Notiflix.Loading.remove();
+                                Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
+                            },
+                        });
+                    }
+                );
+            }
+
         });
     </script>
 @endpush

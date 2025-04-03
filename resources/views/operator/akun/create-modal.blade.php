@@ -2,7 +2,7 @@
     style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form>
+            <form id="tambahAkun-from">
                 <div class="modal-header bg-healt">
                     <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Tambah Akun</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

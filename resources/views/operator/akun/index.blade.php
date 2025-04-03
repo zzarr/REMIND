@@ -60,7 +60,7 @@
         $(document).ready(function() {
 
 
-            $("form").submit(function(e) {
+            $("#tambahAkun-form").submit(function(e) {
                 e.preventDefault(); // Mencegah refresh halaman
 
                 let password = $("input[name='password']").val();
@@ -230,19 +230,33 @@
                 });
             });
 
-            $("#editAkunForm").submit(function(e) {
+            $(document).on("submit", "#editAkunForm", function(e) {
                 e.preventDefault(); // Mencegah refresh halaman
 
+                let password = $("#edit-password").val();
+                let confirmPassword = $("#edit-confirmPassword").val();
 
+
+                // Cek apakah password dan konfirmasi password diisi
+                if (password || confirmPassword) {
+                    if (password !== confirmPassword) {
+                        Notiflix.Notify.failure("Konfirmasi password tidak cocok!");
+                        return; // Hentikan proses jika tidak cocok
+                    }
+                }
 
                 let formData = {
                     id: $("#edit-id").val(),
                     name: $("#edit-name").val(),
                     email: $("#edit-email").val(),
                     role: $("#edit-role").val(),
-
-                    _token: "{{ csrf_token() }}"
+                    _token: $('meta[name="csrf-token"]').attr("content") // Ambil CSRF token dari meta
                 };
+
+                // Jika password diisi, tambahkan ke formData
+                if (password) {
+                    formData.password = password;
+                }
 
                 $.ajax({
                     url: "/operator/akun/update/" + formData.id,
@@ -259,8 +273,9 @@
                             Notiflix.Notify.success(response.message);
                             $("#editAkunForm")[0].reset(); // Reset form
                             $("#editAkun-modal").modal("hide"); // Tutup modal
-                            $("#dataTable").dataTable.refresh(); // Reload tabel
-                            window.location.reload();
+
+                            // Reload tabel tanpa refresh halaman
+                            $("#dataTable").DataTable().ajax.reload(null, false);
                         } else {
                             Notiflix.Notify.failure(response.message ||
                                 "Gagal menyimpan data.");
@@ -269,7 +284,7 @@
                     error: function(xhr) {
                         Notiflix.Loading.remove();
 
-                        let errors = xhr.responseJSON.errors;
+                        let errors = xhr.responseJSON?.errors;
                         if (errors) {
                             let errorMessages = Object.values(errors).map(err => err.join(" "))
                                 .join("<br>");
@@ -280,6 +295,7 @@
                     }
                 });
             });
+
 
             $(document).on("click", ".btn-delete-user", function() {
                 let userId = $(this).data("id");
@@ -309,6 +325,7 @@
                                 if (response.success) {
                                     Notiflix.Notify.success(response.message);
                                     $("#dataTable").DataTable().ajax.reload(); // Refresh tabel
+                                    window.location.reload();
                                 } else {
                                     Notiflix.Notify.failure(response.message ||
                                         "Gagal menghapus data.");

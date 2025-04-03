@@ -54,6 +54,7 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
             Route::post('/store', [PasienController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [PasienController::class, 'edit'])->name('edit');
             Route::put('/update/{id}', [PasienController::class, 'update'])->name('update');
+            Route::delete('/delete/{id}', [PasienController::class, 'destroy'])->name('delete');
         });
 
         Route::group(['prefix' => 'kuisioner', 'as' => 'kuisioner.'], function () {
@@ -62,7 +63,7 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
             Route::post('/store', [KuisionerController::class, 'store'])->name('store');
             Route::get('/edit/{id}', [KuisionerController::class, 'edit'])->name('edit');
             Route::put('/update/{id}', [KuisionerController::class, 'update'])->name('update');
-            
+            Route::delete('/delete/{id}', [KuisionerController::class, 'destroy'])->name('delete');
           
         });
     });

@@ -18,6 +18,31 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="edit-password">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="edit-password"
+                                placeholder="Masukkan password" name="password">
+                            <button class="btn btn-outline-secondary toggle-password" type="button"
+                                data-target="#edit-password">
+                                <i class="ti ti-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit-confirmPassword">Konfirmasi Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="edit-confirmPassword"
+                                placeholder="Konfirmasi password" name="confirmPassword">
+                            <button class="btn btn-outline-secondary toggle-password" type="button"
+                                data-target="#edit-confirmPassword">
+                                <i class="ti ti-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
                         <label for="edit-role">Role</label>
                         <select class="form-select" id="edit-role" name="role">
                             <option value="operator">Operator</option>

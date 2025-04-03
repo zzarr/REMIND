@@ -67,7 +67,7 @@
     <script>
         $(document).ready(function() {
 
-            $("form").submit(function(e) {
+            $("#tambahKuisioner-form").submit(function(e) {
                 e.preventDefault(); // Mencegah refresh halaman
 
 
@@ -161,9 +161,9 @@
                 <a href="#" class="btn btn-sm btn-outline-secondary edit-btn" data-id="${kuisioner.id}" title="Edit">
                                     <i class="ti ti-edit fs-5"></i>
                                 </a>
-                <button class="btn btn-sm btn-outline-danger" onclick="deleteKuisioner(${kuisioner.id})" title="Hapus">
-                    <i class="ti ti-trash fs-5"></i>
-                </button>
+                <a href="#" class="btn btn-sm btn-outline-danger btn-delete-kuisioner text-danger" data-id="${kuisioner.id}" title="Hapus">
+    <i class="ti ti-trash fs-5"></i>
+</a>
                 `
                         ]);
 
@@ -224,27 +224,77 @@
                     _token: $('meta[name="csrf-token"]').attr('content')
                 };
 
-
                 $.ajax({
                     url: `/operator/kuisioner/update/${kuisionerId}`, // Endpoint Laravel
                     type: 'PUT',
                     data: formData,
                     dataType: 'json',
+                    beforeSend: function() {
+                        Notiflix.Loading.standard("Memperbarui...");
+                    },
                     success: function(response) {
+                        Notiflix.Loading.remove();
+
                         if (response.success) {
-                            alert('Data berhasil diperbarui!');
+                            Notiflix.Notify.success("Data berhasil diperbarui!");
                             $('#editKuisioner-modal').modal('hide'); // Tutup modal
                             location.reload(); // Reload halaman untuk update data
                         } else {
-                            alert('Gagal memperbarui data.');
+                            Notiflix.Notify.failure("Gagal memperbarui data.");
                         }
                     },
                     error: function(xhr) {
-                        alert('Terjadi kesalahan saat mengupdate data.');
+                        Notiflix.Loading.remove();
+                        Notiflix.Notify.failure("Terjadi kesalahan saat mengupdate data.");
                         console.log(xhr.responseText); // Debugging error
                     }
                 });
             });
+
+
+            $(document).on("click", ".btn-delete-kuisioner", function() {
+                let kuisionerId = $(this).data("id");
+                deleteUser(kuisionerId);
+
+            });
+
+
+            function deleteUser(kuisionerId) {
+                Notiflix.Confirm.show(
+                    "Konfirmasi",
+                    "Apakah Anda yakin ingin menghapus pengguna ini?",
+                    "Ya, Hapus",
+                    "Batal",
+                    function okCallback() {
+                        $.ajax({
+                            url: `/operator/kuisioner/delete/${kuisionerId}`, // Endpoint hapus
+                            type: "DELETE",
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr("content")
+                            }, // Token CSRF
+                            beforeSend: function() {
+                                Notiflix.Loading.standard("Menghapus...");
+                            },
+                            success: function(response) {
+                                Notiflix.Loading.remove();
+                                if (response.success) {
+                                    Notiflix.Notify.success(response.message);
+                                    $("#dataTable").DataTable().ajax.reload(); // Refresh tabel
+                                    window.location.reload();
+                                } else {
+                                    Notiflix.Notify.failure(response.message ||
+                                        "Gagal menghapus data.");
+                                }
+                            },
+                            error: function() {
+                                Notiflix.Loading.remove();
+                                Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
+                            },
+                        });
+                    }
+                );
+            }
+
 
         });
     </script>
