@@ -51,8 +51,14 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
+                            <a class="nav-link" href="{{ route('tim_peneliti.pasien.index') }}"><i
                                     class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
+                                    class="ti ti-list-check menu-icon"></i><span>Kuisioner</span></a>
                         </li>
 
                         <li class="nav-item">

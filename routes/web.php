@@ -4,14 +4,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Operator\{
     DashboardController as OperatorDashboardController,
-    AkunController,
-    PasienController,
-    KuisionerController
+    AkunController
+   
 };
 
 use App\Http\Controllers\TimPeneliti\{
     DashboardController as TimPenelitiDasboardController,
 
+};
+
+use App\Http\Controllers\{
+    PasienController,
+    KuisionerController
 };
 
 /*
@@ -77,6 +81,13 @@ Route::middleware(['auth', 'role:tim peneliti'])->group(function () {
     Route::group(['prefix' => 'tim_peneliti', 'as' => 'tim_peneliti.'], function () {
 
         Route::get('/dashboard', [TimPenelitiDasboardController::class, 'index'])->name('dashboard');
+
+        Route::group(['prefix' => 'pasien', 'as' => 'pasien.'], function (){
+
+            Route::get('/', [PasienController::class, 'view'])->name('index');
+            Route::get('/data', [PasienController::class, 'data'])->name('data');
+
+        });
 
 
     });
