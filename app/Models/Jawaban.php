@@ -12,7 +12,7 @@ class Jawaban extends Model
     protected $table = 'jawaban';
 
     protected $fillable = [
-        'id_kuisioner', 'id_jawaban', 'id_pasien', 'jenis_test',
+        'id_kuisioner', 'id_pasien', 'nilai', 'jenis_test'
     ];
 
     public function kuisioner() {

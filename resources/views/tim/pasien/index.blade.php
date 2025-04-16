@@ -74,9 +74,11 @@
                     method: "GET",
                     dataType: "json",
                     beforeSend: function() {
+                        Notiflix.Loading.standard("Memuat data...");
                         console.log("Memuat data...");
                     },
                     success: function(response) {
+                        Notiflix.Loading.remove();
                         if (!response.data || response.data.length === 0) {
                             dataTable.clear();
                             dataTable.refresh();
@@ -90,7 +92,7 @@
                             if (!pasien.hasil_analisis) {
                                 // Belum isi pretest
                                 aksiBtn = `
-                        <a href="/tim-peneliti/kuisioner/pretest/${pasien.id}" class="btn btn-sm btn-outline-primary" title="Isi Pretest">
+                        <a href="/tim_peneliti/kuisioner/pretest/${pasien.id}" class="btn btn-sm btn-outline-primary" title="Isi Pretest">
                             <i class="ti ti-clipboard-text fs-5"></i> Pretest
                         </a>
                     `;
@@ -98,13 +100,14 @@
                                 .skor_posttest === null) {
                                 // Sudah isi pretest, belum posttest
                                 aksiBtn = `
-                        <a href="/tim-peneliti/kuisioner/posttest/${pasien.id}" class="btn btn-sm btn-outline-success" title="Isi Posttest">
+                        <a href="/tim_peneliti/kuisioner/posttest/${pasien.id}" class="btn btn-sm btn-outline-success" title="Isi Posttest">
                             <i class="ti ti-checklist fs-5"></i> Posttest
                         </a>
                     `;
                             } else {
                                 // Sudah isi semua, tidak tampilkan tombol
-                                aksiBtn = `<span class="badge bg-success">Selesai</span>`;
+                                aksiBtn =
+                                    `<span class="badge rounded-pill badge-soft-success">Success</span>`;
                             }
 
                             return [
@@ -119,6 +122,7 @@
                         dataTable.refresh();
                     },
                     error: function(xhr, status, error) {
+                        Notiflix.Loading.remove();
                         console.error("Gagal mengambil data:", error);
                     }
                 });

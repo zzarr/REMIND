@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('hasil_analisis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_pasien')->constrained('pasien')->onDelete('cascade');
-            $table->integer('skor_pretest');
-            $table->integer('skor_posttest');
+            $table->integer('skor_pretest')->nullable();
+            $table->integer('skor_posttest')->nullable();
             $table->text('kesimpulan')->nullable();
             $table->timestamps();
         });

@@ -7,10 +7,11 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^10.10",
+        "laravel/framework": "10.48.29",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.6",
+        "livewire/livewire": "^3.6",
         "yajra/laravel-datatables": "^10.1"
     },
     "require-dev": {

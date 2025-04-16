@@ -28,12 +28,12 @@
                 <div class="col-lg-6">
                     <div class="card  rounded-3 shadow-custom">
                         <div class="card-header bg-healt">
-                            <p class="text-white mb-0 fw-semibold">Posttest</p>
+
                         </div>
                         <div class="card-body ">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
-
+                                    <p class="text-dark mb-0 fw-semibold">Posttest</p>
                                     <h3 class="my-1 font-20 fw-bold ">{{ $posttest }} Pasien</h3>
 
                                 </div><!--end col-->
@@ -160,44 +160,9 @@
                 <div class="card-body shadow-custom">
                     <div class="text-center">
                         <div id="ana_device" class="apex-charts"></div>
-                        <h6 class="bg-light-alt py-3 px-2 mb-0">
-                            <i data-feather="calendar" class="align-self-center icon-xs me-1"></i>
-                            01 January 2020 to 31 December 2020
-                        </h6>
-                    </div>
-                    <div class="table-responsive mt-2">
-                        <table class="table border-dashed mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Device</th>
-                                    <th class="text-end">Sassions</th>
-                                    <th class="text-end">Day</th>
-                                    <th class="text-end">Week</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Dasktops</td>
-                                    <td class="text-end">1843</td>
-                                    <td class="text-end">-3</td>
-                                    <td class="text-end">-12</td>
-                                </tr>
-                                <tr>
-                                    <td>Tablets</td>
-                                    <td class="text-end">2543</td>
-                                    <td class="text-end">-5</td>
-                                    <td class="text-end">-2</td>
-                                </tr>
-                                <tr>
-                                    <td>Mobiles</td>
-                                    <td class="text-end">3654</td>
-                                    <td class="text-end">-5</td>
-                                    <td class="text-end">-6</td>
-                                </tr>
 
-                            </tbody>
-                        </table><!--end /table-->
-                    </div><!--end /div-->
+                    </div>
+
                 </div><!--end card-body-->
             </div><!--end card-->
         </div><!--end col-lg-3-->
@@ -239,7 +204,11 @@
                 fontSize: "13px"
             },
             labels: ["Turun", "Naik", "Netral"],
-            colors: ["#2a76f4", "rgba(42, 118, 244, .5)", "rgba(42, 118, 244, .18)"],
+            colors: [
+                "#0F9E99", // Solid
+                "rgba(15, 158, 153, 0.7)", // Warna tengah, lebih tebal dari sebelumnya
+                "rgba(15, 158, 153, 0.35)" // Warna lembut tapi tetap kelihatan
+            ],
             responsive: [{
                 breakpoint: 600,
                 options: {
@@ -249,7 +218,7 @@
                         }
                     },
                     chart: {
-                        height: 240
+                        height: 200
                     },
                     legend: {
                         show: false
