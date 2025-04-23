@@ -76,9 +76,11 @@
                     method: "GET",
                     dataType: "json",
                     beforeSend: function() {
-                        console.log("Memuat data...");
+                        Notiflix.Loading.standard("Memuat data...");
+                        console.log("Memulai request baru...");
                     },
                     success: function(response) {
+                        Notiflix.Loading.remove();
                         if (!response.data || response.data.length === 0) {
                             dataTable.clear();
                             dataTable.refresh();
@@ -125,29 +127,36 @@
                     data: formData,
                     dataType: "json",
                     beforeSend: function() {
-                        console.log("Menyimpan data...");
+                        Notiflix.Loading.standard("Menyimpan...");
                     },
                     success: function(response) {
-                        if (!response.success) {
-                            alert(response.message || "Gagal menyimpan data.");
-                            return;
+                        Notiflix.Loading.remove();
+
+                        if (response.success) {
+                            Notiflix.Notify.success(response.message ||
+                                "Data berhasil disimpan!");
+                            $("form")[0].reset();
+                            $("#tambahPasien-modal").modal("hide");
+                            loadUserData();
+                        } else {
+                            Notiflix.Notify.failure(response.message ||
+                            "Gagal menyimpan data.");
                         }
-                        alert("Data berhasil disimpan!");
-                        $("form")[0].reset();
-                        $("#tambahPasien-modal").modal("hide");
-                        loadUserData();
                     },
                     error: function(xhr) {
+                        Notiflix.Loading.remove();
+
                         let errors = xhr.responseJSON.errors;
                         if (errors) {
                             let errorMessages = Object.values(errors).map(err => err.join(" "))
-                                .join("\n");
-                            alert("Gagal!\n" + errorMessages);
+                                .join("<br>");
+                            Notiflix.Report.failure("Gagal!", errorMessages, "Tutup");
                         } else {
-                            alert("Terjadi kesalahan. Coba lagi.");
+                            Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
                         }
                     }
                 });
+
             });
 
             $(document).on("click", ".edit-btn", function() {

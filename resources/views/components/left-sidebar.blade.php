@@ -34,7 +34,7 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav">
 
-                    <hr>
+
                     <!-- Menu ini hanya untuk role 'operator' -->
                     @if (Auth::check() && Auth::user()->role === 'operator')
                         <li class="nav-item">
@@ -44,8 +44,8 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('operator.akun.index') }}"><i
-                                    class="ti ti-user menu-icon"></i><span>Akun
-                                    Tim </span></a>
+                                    class="ti ti-user menu-icon"></i><span>Manajemen Akun
+                                </span></a>
                         </li>
 
                         <li class="nav-item">

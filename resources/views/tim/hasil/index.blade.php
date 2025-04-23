@@ -92,9 +92,9 @@
 
                         let newData = response.data.map(hasil => [
                             hasil.pasien.nama,
-                            hasil.skor_pretest.toString(),
-                            hasil.skor_posttest.toString(),
-                            hasil.kesimpulan
+                            hasil.skor_pretest?.toString() || "",
+                            hasil.skor_posttest != null ? hasil.skor_posttest.toString() : "",
+                            hasil.kesimpulan || ""
                         ]);
 
                         console.log("Data yang akan dimasukkan:", newData); // Debugging
