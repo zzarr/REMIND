@@ -62,37 +62,27 @@
                             <div class="table-responsive">
                                 <table class="table mb-0 table-centered">
                                     <thead>
+
                                         <tr>
                                             <th>Nama</th>
                                             <th>Umur</th>
                                             <th>Tanggal Pretest</th>
                                             <th>Hasil</th>
-                                            <th class="text-end">Action</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                Ahmad
-                                            </td>
-                                            <td>14</td>
-                                            <td>11-11-2024</td>
-                                            <td>30 </td>
-                                            <td class="text-end">
-                                                <div class="dropdown d-inline-block">
-                                                    <a class="dropdown-toggle arrow-none" id="dLabel11"
-                                                        data-bs-toggle="dropdown" href="#" role="button"
-                                                        aria-haspopup="false" aria-expanded="false">
-                                                        <i class="las la-ellipsis-v font-20 text-muted"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11">
-                                                        <a class="dropdown-item" href="#">Creat Project</a>
-                                                        <a class="dropdown-item" href="#">Open Project</a>
-                                                        <a class="dropdown-item" href="#">Tasks Details</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @foreach ($riwayatPretest as $riwayat)
+                                            <tr>
+                                                <td>
+                                                    {{ $riwayat->pasien->nama }}
+                                                </td>
+                                                <td>{{ $riwayat->pasien->usia }}</td>
+                                                <td>{{ $riwayat->tanggal_pretest }}</td>
+                                                <td>{{ $riwayat->skor_pretest }}</td>
+
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table><!--end /table-->
                             </div>
@@ -113,32 +103,22 @@
                                             <th>Umur</th>
                                             <th>Tanggal Posttest</th>
                                             <th>Hasil</th>
-                                            <th class="text-end">Action</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                Ahmad
-                                            </td>
-                                            <td>14</td>
-                                            <td>11-11-2024</td>
-                                            <td>30 </td>
-                                            <td class="text-end">
-                                                <div class="dropdown d-inline-block">
-                                                    <a class="dropdown-toggle arrow-none" id="dLabel11"
-                                                        data-bs-toggle="dropdown" href="#" role="button"
-                                                        aria-haspopup="false" aria-expanded="false">
-                                                        <i class="las la-ellipsis-v font-20 text-muted"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11">
-                                                        <a class="dropdown-item" href="#">Creat Project</a>
-                                                        <a class="dropdown-item" href="#">Open Project</a>
-                                                        <a class="dropdown-item" href="#">Tasks Details</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @foreach ($riwayatPosttest as $riwayat)
+                                            <tr>
+                                                <td>
+                                                    {{ $riwayat->pasien->nama }}
+                                                </td>
+                                                <td>{{ $riwayat->pasien->usia }}</td>
+                                                <td>{{ $riwayat->tanggal_posttest }}</td>
+                                                <td>{{ $riwayat->skor_posttest }}</td>
+
+                                            </tr>
+                                        @endforeach
+
                                     </tbody>
                                 </table><!--end /table-->
                             </div>
@@ -148,7 +128,7 @@
             </div>
         </div> <!-- end col-lg-9 -->
         <div class="col-lg-3"><!--Start col-lg-3-->
-            <div class="card">
+            <div class="card" data-aos="fade-left" data-aos-duration="1200">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -174,7 +154,17 @@
 
 
     <script>
+        const chartData = {
+            series: [
+                {{ $persenTurun }},
+                {{ $persenNaik }},
+                {{ $persenNetral }}
+            ],
+            labels: ["Turun", "Naik", "Netral"]
+        };
+
         // ====== Donut Chart: Devices ======
+
         const optionsDevice = {
             chart: {
                 height: 255,
@@ -195,7 +185,7 @@
                 width: 2,
                 colors: ["transparent"]
             },
-            series: [50, 25, 25],
+            series: chartData.series,
             legend: {
                 show: true,
                 position: "bottom",
@@ -203,7 +193,7 @@
                 verticalAlign: "middle",
                 fontSize: "13px"
             },
-            labels: ["Turun", "Naik", "Netral"],
+            labels: chartData.labels,
             colors: [
                 "#0F9E99", // Solid
                 "rgba(15, 158, 153, 0.7)", // Warna tengah, lebih tebal dari sebelumnya

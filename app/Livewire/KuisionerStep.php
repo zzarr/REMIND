@@ -80,8 +80,10 @@ class KuisionerStep extends Component
 
         if ($this->jenis === 'pretest') {
             $analisis->skor_pretest = $total;
+            $analisis->tanggal_pretest = now();
         } else {
             $analisis->skor_posttest = $total;
+            $analisis->tanggal_posttest = now();
 
             if (!is_null($analisis->skor_pretest)) {
                 $analisis->kesimpulan = match (true) {

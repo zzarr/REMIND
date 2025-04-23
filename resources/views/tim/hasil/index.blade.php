@@ -1,19 +1,22 @@
-@extends('operator.layout.app')
-@section('title', 'Pasien')
+@extends('tim.layout.app')
+
+@section('title', 'hasil')
+
 @section('content')
     <div class="row justify-content-center align-items-center g-2">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body shadow-custom">
 
+
                     <div class="table-responsive">
-                        <table class="table" id="pasien-table">
+                        <table class="table" id="hasil-table">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Usia</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Aksi</th>
+                                    <th>skor Pretest</th>
+                                    <th>skor Posttest</th>
+                                    <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,27 +31,28 @@
 
     </div>
 
-
 @endsection
+
 @push('css')
     <link rel="stylesheet" href="{{ asset('libs/table/datatable/datatables.css') }}">
     <!-- <link rel="stylesheet" href="{{ asset('libs/table/datatable/dt-global_style.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('libs/simple-datatables/style.css') }}">
     <!-- notiflix -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.6.min.css" />
+
     <!-- DataTables CSS -->
 @endpush
 
 @push('script')
     <script src="{{ asset('libs/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ asset('libs/simple-datatables/umd/simple-datatables.js') }}"></script>
-
     <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <!--<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> -->
+    <script src="{{ asset('libs/simple-datatables/umd/simple-datatables.js') }}"></script>
 
     <script>
         $(document).ready(function() {
-            const dataTable = new simpleDatatables.DataTable("#pasien-table", {
+            // Inisialisasi Simple-DataTables
+            const dataTable = new simpleDatatables.DataTable("#hasil-table", {
                 searchable: true,
                 fixedHeight: false,
                 perPage: 5,
@@ -63,58 +67,43 @@
                 }
             });
 
-            function loadPasienData() {
+            function loadHasilData() {
                 $.ajax({
-                    url: "{{ route('tim_peneliti.pasien.data') }}",
+                    url: "{{ route('tim_peneliti.hasil.data') }}", // Sesuaikan dengan route API-mu
                     method: "GET",
                     dataType: "json",
                     beforeSend: function() {
                         Notiflix.Loading.standard("Memuat data...");
-                        console.log("Memuat data...");
+                        console.log("Memulai request baru...");
                     },
                     success: function(response) {
                         Notiflix.Loading.remove();
+                        console.log("Data dari server:", response); // Debugging
+
                         if (!response.data || response.data.length === 0) {
+                            console.warn("Data kosong atau tidak ditemukan!");
                             dataTable.clear();
                             dataTable.refresh();
                             return;
                         }
 
+                        // **Hapus semua data lama sebelum menambahkan yang baru**
                         dataTable.clear();
-                        let newData = response.data.map(pasien => {
-                            let aksiBtn = "";
 
-                            if (!pasien.hasil_analisis) {
-                                // Belum isi pretest
-                                aksiBtn = `
-                        <a href="/tim_peneliti/kuisioner/pretest/${pasien.id}" class="btn btn-sm btn-outline-primary" title="Isi Pretest">
-                            <i class="ti ti-clipboard-text fs-5"></i> Pretest
-                        </a>
-                    `;
-                            } else if (pasien.hasil_analisis && pasien.hasil_analisis
-                                .skor_posttest === null) {
-                                // Sudah isi pretest, belum posttest
-                                aksiBtn = `
-                        <a href="/tim_peneliti/kuisioner/posttest/${pasien.id}" class="btn btn-sm btn-outline-success" title="Isi Posttest">
-                            <i class="ti ti-checklist fs-5"></i> Posttest
-                        </a>
-                    `;
-                            } else {
-                                // Sudah isi semua, tidak tampilkan tombol
-                                aksiBtn =
-                                    `<span class="badge rounded-pill badge-soft-success">Success</span>`;
-                            }
+                        let newData = response.data.map(hasil => [
+                            hasil.pasien.nama,
+                            hasil.skor_pretest.toString(),
+                            hasil.skor_posttest.toString(),
+                            hasil.kesimpulan
+                        ]);
 
-                            return [
-                                pasien.nama,
-                                pasien.usia.toString(),
-                                pasien.jenis_kelamin,
-                                aksiBtn
-                            ];
-                        });
+                        console.log("Data yang akan dimasukkan:", newData); // Debugging
 
+                        // **Tambahkan data baru ke dalam tabel**
                         dataTable.rows().add(newData);
                         dataTable.refresh();
+
+                        console.log("Tabel berhasil diperbarui!");
                     },
                     error: function(xhr, status, error) {
                         Notiflix.Loading.remove();
@@ -123,8 +112,8 @@
                 });
             }
 
+            loadHasilData();
 
-            loadPasienData();
 
         });
     </script>

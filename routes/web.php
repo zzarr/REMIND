@@ -10,6 +10,7 @@ use App\Http\Controllers\Operator\{
 
 use App\Http\Controllers\TimPeneliti\{
     DashboardController as TimPenelitiDasboardController,
+    HasilAnalisisConroller
 
 };
 
@@ -17,6 +18,7 @@ use App\Http\Controllers\{
     PasienController,
     KuisionerController
 };
+use App\Models\HasilAnalisis;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +96,13 @@ Route::middleware(['auth', 'role:tim peneliti'])->group(function () {
                 return view('tim.kuisioner.step-form', compact('jenis', 'pasien_id'));
             })->name('step');
         });
+
+        Route::group(['prefix' => 'hasil', 'as' => 'hasil.'], function () {
+            Route::get('/', [HasilAnalisisConroller::class, 'index'])->name('index');
+            Route::get('/data', [HasilAnalisisConroller::class, 'data'])->name('data');
+        });
+
+
 
 
     });

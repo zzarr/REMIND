@@ -4,7 +4,8 @@
 
 
     <meta charset="utf-8">
-    <title>REAMAIN | LOGIN </title>
+    <title>REAMIND | LOGIN </title>
+    <link rel="icon" href="{{ asset('img/LOGO/remind_logo_color.svg') }}" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Premium Multipurpose Admin &amp; Dashboard Template" name="description">
     <meta content="" name="author">
@@ -17,6 +18,7 @@
 
     <!-- App css -->
     @include('components.head-css')
+
 
 </head>
 
@@ -32,11 +34,12 @@
                                 <div class="card-body p-0">
                                     <div class="text-center p-3">
                                         <a href="index.html" class="logo logo-admin">
-                                            <img src="assets/images/logo-sm.png" height="50" alt="logo"
-                                                class="auth-logo">
+                                            <img src="{{ asset('img/LOGO/remind_logo_color.png') }}" height="50"
+                                                alt="logo" class="auth-logo" data-aos="zoom-in"
+                                                data-aos-duration="1200">
                                         </a>
-                                        <h4 class="mt-3 mb-1 fw-semibold font-18">Let's Get Started REMAIN</h4>
-                                        <p class="text-muted  mb-0">Sign in to continue to REMAIN.</p>
+                                        <h4 class="mt-3 mb-1 fw-semibold font-18">Let's Get Started REMIND</h4>
+                                        <p class="text-muted  mb-0">Sign in to continue to REMIND.</p>
                                     </div>
                                 </div><!--end card-body-->
                                 <div class="card-body pt-0">
@@ -96,14 +99,19 @@
                         </div><!--end col-->
                         <div class="col-md-7 col-xl-9 col-lg-8  p-0 vh-100 d-flex justify-content-center auth-bg">
                             <div class="d-flex align-items-center">
-                                <div class="account-title text-center text-white">
-                                    <img src="assets/images/logo-sm.png" alt="" class="thumb-sm">
-                                    <h4 class="mt-3 text-white">Welcome To <span class="text-warning">REMAIN</span>
+                                <div class="account-title text-center text-white" data-aos="fade-up"
+                                    data-aos-duration="1700">
+
+                                    <h4 class="mt-3 text-white">Welcome <span class="text-warning">To</span>
                                     </h4>
-                                    <h1 class="text-white">Let's Get Started</h1>
-                                    <p class="font-18 mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Aliquam laoreet tellus ut tincidunt euismod.</p>
-                                    <div class="border w-25 mx-auto border-warning"></div>
+                                    <img src="{{ asset('img/LOGO/remind_logo_white.png') }}" alt=""
+                                        class="thumb-xl">
+
+                                    <img src="{{ asset('img/TYPOGRAPHY/remind_typography_white.png') }}" alt=""
+                                        class="" height="50">
+                                    <div class="border w-75 mx-auto border-warning"></div>
+
+
                                 </div>
                             </div><!--end /div-->
                         </div><!--end col-->

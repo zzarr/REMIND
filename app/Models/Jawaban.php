@@ -23,4 +23,17 @@ class Jawaban extends Model
     public function pasien() {
         return $this->belongsTo(Pasien::class, 'id_pasien');
     }
+
+    public function getLabelAttribute()
+    {
+        $labels = [
+            0 => 'Never',
+            1 => 'Almost Never',
+            2 => 'Sometimes',
+            3 => 'Fairly Often',
+            4 => 'Very Often',
+        ];
+        return $labels[$this->nilai] ?? '-';
+    }
+
 }

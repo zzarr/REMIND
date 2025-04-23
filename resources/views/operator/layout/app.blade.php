@@ -6,6 +6,7 @@
 
     <meta charset="utf-8" />
     <title>REMAIN | @yield('title')</title>
+    <link rel="icon" href="{{ asset('img/LOGO/remind_logo_color.svg') }}" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

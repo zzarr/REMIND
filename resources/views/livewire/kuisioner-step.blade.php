@@ -14,7 +14,18 @@
                 3 => 'Fairly Often',
                 4 => 'Very Often',
             ];
+
+            $jawabanSebelumnya = \App\Models\Jawaban::where('id_pasien', $pasien_id)
+                ->where('id_kuisioner', $item['id'])
+                ->where('jenis_test', $jenis)
+                ->first();
         @endphp
+
+        @if ($jawabanSebelumnya)
+            <div class="alert alert-info">
+                Jawaban sebelumnya: <strong>{{ $jawabanSebelumnya->label }}</strong>
+            </div>
+        @endif
 
         <div class="card shadow-sm">
             <div class="card-body">

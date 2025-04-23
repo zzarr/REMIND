@@ -12,7 +12,7 @@ class HasilAnalisis extends Model
     protected $table = 'hasil_analisis';
 
     protected $fillable = [
-        'id_pasien', 'skor_pretest', 'skor_posttest', 'kesimpulan',
+        'id_pasien', 'skor_pretest', 'tanggal_pretest', 'skor_posttest','tanggal_posttest', 'kesimpulan',
     ];
 
     public function pasien() {

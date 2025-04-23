@@ -1,13 +1,29 @@
 <div class="left-sidebar">
     <!-- LOGO -->
     <div class="brand">
-        <a href="index.html" class="logo">
+
+        @php
+            $role = Auth::user()->role;
+            $url = '#'; // default
+
+            if ($role === 'admin') {
+                $url = route('admin.dashboard');
+            } elseif ($role === 'operator') {
+                $url = route('operator.dashboard');
+            } elseif ($role === 'tim peneliti') {
+                $url = route('tim_peneliti.dashboard');
+            }
+        @endphp
+
+        <a href="{{ $url }}" class="logo">
             <span style="margin: 0">
-                <i class="ti ti-letter-r"></i>
+                <img src="{{ asset('img/LOGO/remind_logo_color.png') }}" alt="logo-small" class="logo" height="40"
+                    data-aos="fade-right" data-aos-duration="1200">
             </span>
             <span>
                 <img src="assets/images/logo.png" alt="logo-large" class="logo-lg logo-light">
-                <div class="logo-lg logo-dark">EMAIN</div>
+                <img src="{{ asset('img/TYPOGRAPHY/remind_typography_black.png') }}" alt="logo-large"
+                    class="logo-lg logo-dark" data-aos="fade-left" data-aos-duration="1200">
             </span>
         </a>
     </div>
@@ -17,7 +33,7 @@
             <div class="collapse navbar-collapse" id="sidebarCollapse">
                 <!-- Navigation -->
                 <ul class="navbar-nav">
-                    <li class="menu-label mt-0"><i class="ti ti-letter-m"></i><span>ain</span></li>
+
                     <hr>
                     <!-- Menu ini hanya untuk role 'operator' -->
                     @if (Auth::check() && Auth::user()->role === 'operator')
@@ -46,24 +62,26 @@
                     <!-- Menu ini hanya untuk role 'tim peneliti' -->
                     @if (Auth::check() && Auth::user()->role === 'tim peneliti')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tim_peneliti.dashboard') }}"><i
-                                    class="ti ti-home menu-icon"></i><span>Dashboard</span></a>
+                            <a class="nav-link" href="{{ route('tim_peneliti.dashboard') }}"data-aos="fade-right"
+                                data-aos-duration="1000"><i class="ti ti-home menu-icon"></i><span>Dashboard</span></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('tim_peneliti.pasien.index') }}"><i
-                                    class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
+                            <a class="nav-link" href="{{ route('tim_peneliti.pasien.index') }}" data-aos="fade-right"
+                                data-aos-duration="1100"><i class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
                         </li>
 
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
+                            <a class="nav-link" href="{{ route('operator.pasien.index') }}" data-aos="fade-right"
+                                data-aos-duration="1150"><i
                                     class="ti ti-list-check menu-icon"></i><span>Kuisioner</span></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
-                                    class="ti ti-file-report menu-icon"></i><span>Hasil Test</span></a>
+                            <a class="nav-link" href="{{ route('tim_peneliti.hasil.index') }}" data-aos="fade-right"
+                                data-aos-duration="1200"><i class="ti ti-file-report menu-icon"></i><span>Hasil
+                                    Test</span></a>
                         </li>
                     @endif
 

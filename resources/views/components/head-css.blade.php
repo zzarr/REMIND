@@ -3,3 +3,4 @@
 <link href="{{ asset('css/app2.css') }}" rel="stylesheet" type="text/css" />
 <!-- notiflix -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.6.min.css" />
+<link rel="stylesheet" href="{{ asset('aos.css') }}">
