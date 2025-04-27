@@ -16,8 +16,10 @@ return new class extends Migration
         $table->foreignId('id_pasien')->constrained('pasien')->onDelete('cascade');
         $table->integer('skor_pretest')->nullable();
         $table->dateTime('tanggal_pretest')->nullable(); // ditambahkan
+        $table->foreignId('hasil_pretest')->constrained('tingkat_stres')->onDelete('cascade');
         $table->integer('skor_posttest')->nullable();
         $table->dateTime('tanggal_posttest')->nullable(); // ditambahkan
+        $table->foreignId('hasil_posttest')->constrained('tingkat_stres')->onDelete('cascade');
         $table->text('kesimpulan')->nullable();
         $table->timestamps();
     });

@@ -137,10 +137,10 @@
                                 "Data berhasil disimpan!");
                             $("form")[0].reset();
                             $("#tambahPasien-modal").modal("hide");
-                            loadUserData();
+                            window.location.reload();
                         } else {
                             Notiflix.Notify.failure(response.message ||
-                            "Gagal menyimpan data.");
+                                "Gagal menyimpan data.");
                         }
                     },
                     error: function(xhr) {

@@ -92,10 +92,11 @@
                         Notiflix.Loading.remove();
 
                         if (response.success) {
-                            Notiflix.Notify.success(response.message);
+
                             $("form")[0].reset();
                             $("#tambahAkun-modal").modal("hide");
                             window.location.reload();
+                            Notiflix.Notify.success(response.message);
 
                         } else {
                             Notiflix.Notify.failure(response.message ||

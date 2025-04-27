@@ -45,9 +45,12 @@
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script></script>
 
     <script>
         $(document).ready(function() {
+
+
             const dataTable = new simpleDatatables.DataTable("#pasien-table", {
                 searchable: true,
                 fixedHeight: false,
@@ -64,7 +67,9 @@
             });
 
             function loadPasienData() {
+                const jumlahKuisioner = {{ $kuisioner }}; // dari controller
                 $.ajax({
+
                     url: "{{ route('tim_peneliti.pasien.data') }}",
                     method: "GET",
                     dataType: "json",
@@ -84,7 +89,10 @@
                         let newData = response.data.map(pasien => {
                             let aksiBtn = "";
 
-                            if (!pasien.hasil_analisis) {
+                            if (jumlahKuisioner === 0) {
+                                aksiBtn =
+                                    `<span class="badge bg-warning-subtle text-dark">Tidak ada kuisioner tersedia</span>`;
+                            } else if (!pasien.hasil_analisis) {
                                 // Belum isi pretest
                                 aksiBtn = `
                         <a href="/tim_peneliti/kuisioner/pretest/${pasien.id}" class="btn btn-sm btn-outline-primary" title="Isi Pretest">

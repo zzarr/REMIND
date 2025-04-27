@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\Pasien;
-use App\Models\HasilAnalisis;
+use App\Models\Kuisioner;
 
 class PasienController extends Controller
 {
     public function index()
     {
+        
         return view('operator.pasien.index');
     }
 
@@ -85,7 +86,8 @@ class PasienController extends Controller
     }
 
     public function view(){
+        $kuisioner = Kuisioner::count();
 
-        return view('tim.pasien.index');
+        return view('tim.pasien.index', compact('kuisioner'));
     }
 }
