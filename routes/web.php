@@ -92,9 +92,7 @@ Route::middleware(['auth', 'role:tim peneliti'])->group(function () {
         });
 
         Route::group(['prefix' => 'kuisioner', 'as' => 'kuisioner.'], function(){
-            Route::get('/{jenis}/{pasien_id}', function ($jenis, $pasien_id) {
-                return view('tim.kuisioner.step-form', compact('jenis', 'pasien_id'));
-            })->name('step');
+            Route::get('/{jenis}/{pasien_id}', [KuisionerController::class, 'show'])->name('step');
         });
 
         Route::group(['prefix' => 'hasil', 'as' => 'hasil.'], function () {

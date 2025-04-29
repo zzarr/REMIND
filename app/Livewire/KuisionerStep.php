@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Kuisioner;
 use App\Models\Jawaban;
 use App\Models\HasilAnalisis;
+use App\Models\TingkatStres;
 
 class KuisionerStep extends Component
 {
@@ -76,14 +77,42 @@ class KuisionerStep extends Component
             ->where('jenis_test', $this->jenis)
             ->sum('nilai');
 
+        $maxNilai = Kuisioner::count() * 4;
+        $rendah = TingkatStres::where('nama_level', 'rendah')->value('nilai_max');
+        $sedang = TingkatStres::where('nama_level', 'sedang')->value('nilai_max');
+
         $analisis = HasilAnalisis::firstOrNew(['id_pasien' => $this->pasien_id]);
 
         if ($this->jenis === 'pretest') {
             $analisis->skor_pretest = $total;
             $analisis->tanggal_pretest = now();
+            $persentase = $total /  $maxNilai * 100;
+
+            if($persentase <= $rendah){
+                $analisis->hasil_pretest = TingkatStres::where('nama_level', 'rendah')->value('id');
+            }
+            elseif ($persentase <= $sedang) {
+                $analisis->hasil_pretest = TingkatStres::where('nama_level', 'sedang')->value('id');
+            }
+            else{
+                $analisis->hasil_pretest = TingkatStres::where('nama_level', 'tinggi')->value('id');
+            }
+
         } else {
             $analisis->skor_posttest = $total;
             $analisis->tanggal_posttest = now();
+
+            $persentase = $total /  $maxNilai * 100;
+
+            if($persentase <= $rendah){
+                $analisis->hasil_posttest = TingkatStres::where('nama_level', 'rendah')->value('id');
+            }
+            elseif ($persentase <= $sedang) {
+                $analisis->hasil_posttest = TingkatStres::where('nama_level', 'sedang')->value('id');
+            }
+            else{
+                $analisis->hasil_posttest = TingkatStres::where('nama_level', 'tinggi')->value('id');
+            }
 
             if (!is_null($analisis->skor_pretest)) {
                 $analisis->kesimpulan = match (true) {

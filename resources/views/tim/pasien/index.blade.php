@@ -91,7 +91,7 @@
 
                             if (jumlahKuisioner === 0) {
                                 aksiBtn =
-                                    `<span class="badge bg-warning-subtle text-dark">Tidak ada kuisioner tersedia</span>`;
+                                    `<span class="badge badge-outline-secondary ">Tidak ada kuisioner tersedia</span>`;
                             } else if (!pasien.hasil_analisis) {
                                 // Belum isi pretest
                                 aksiBtn = `

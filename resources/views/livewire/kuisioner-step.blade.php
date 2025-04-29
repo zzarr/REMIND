@@ -1,4 +1,8 @@
 <div class="container mt-5">
+    @php
+        use App\Models\Jawaban;
+    @endphp
+
     @if ($selesai)
         <div class="text-center">
             <h4 class="text-success mb-3">Terima kasih! Kuisioner {{ ucfirst($jenis) }} telah selesai.</h4>
@@ -15,7 +19,7 @@
                 4 => 'Very Often',
             ];
 
-            $jawabanSebelumnya = \App\Models\Jawaban::where('id_pasien', $pasien_id)
+            $jawabanSebelumnya = Jawaban::where('id_pasien', $pasien_id)
                 ->where('id_kuisioner', $item['id'])
                 ->where('jenis_test', $jenis)
                 ->first();

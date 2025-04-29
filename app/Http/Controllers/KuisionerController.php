@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kuisioner;
+use App\Models\Jawaban;
 
 class KuisionerController extends Controller
 {
@@ -73,5 +74,12 @@ class KuisionerController extends Controller
             'success' => true,
             'message' => 'Data kuisioner berhasil dihapus.',
         ]);
+    }
+
+    public function show(Request $request, $jenis, $pasien_id){
+        if (!in_array($jenis, ['pretest', 'posttest'])) {
+            abort(404);
+        }
+        return view('tim.kuisioner.step-form', compact('jenis', 'pasien_id'));
     }
 }
