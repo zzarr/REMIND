@@ -31,7 +31,7 @@
             </div>
         @endif
 
-        <div class="card shadow-sm transition-all duration-500 ease-in-out transform" key="{{ $currentIndex }}">
+        <div class="card shadow-sm ">
             <div class="card-body">
                 <h5 class="mb-3">Pertanyaan {{ $currentIndex + 1 }} dari {{ count($pertanyaan) }}</h5>
                 <p class="fs-5">{{ $item['pertanyaan'] }}</p>

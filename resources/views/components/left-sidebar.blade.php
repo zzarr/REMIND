@@ -72,11 +72,7 @@
                         </li>
 
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('operator.pasien.index') }}" data-aos="fade-right"
-                                data-aos-duration="1150"><i
-                                    class="ti ti-list-check menu-icon"></i><span>Kuisioner</span></a>
-                        </li>
+
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('tim_peneliti.hasil.index') }}" data-aos="fade-right"

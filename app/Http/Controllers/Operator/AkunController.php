@@ -41,7 +41,6 @@ class AkunController extends Controller
             'success' => true, // Ubah dari 'status' menjadi 'success'
             'message' => 'Akun berhasil ditambahkan',
         ]);
-        
     }
 
     public function edit($id){
@@ -51,13 +50,13 @@ class AkunController extends Controller
 
     public function update(Request $request, $id)
     {
-        // ✅ 1. Validasi input
+       
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $id,
         ]);
     
-        // ✅ 2. Cek apakah user ada
+        
         $user = User::find($id);
         if (!$user) {
             return response()->json([
@@ -66,7 +65,7 @@ class AkunController extends Controller
             ], 404);
         }
     
-        // ✅ 3. Update data user
+        
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
 
@@ -95,7 +94,5 @@ class AkunController extends Controller
                 'message' => 'Terjadi kesalahan saat menghapus akun.',
             ], 500);
         }
-    }
-
-    
+    }  
 }

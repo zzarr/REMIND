@@ -1,4 +1,4 @@
-@extends('operator.layout.app')
+@extends('tim.layout.app')
 @section('title', 'Pasien')
 @section('content')
     <div class="row justify-content-center align-items-center g-2">
@@ -85,30 +85,38 @@
                             return;
                         }
 
+                        // Urutkan data: belum isi pretest -> isi pretest tapi belum posttest -> sudah lengkap
+                        const sortedData = response.data.sort((a, b) => {
+                            const getStatus = (pasien) => {
+                                if (!pasien.hasil_analisis) return 0; // belum isi pretest
+                                if (pasien.hasil_analisis && pasien.hasil_analisis
+                                    .skor_posttest === null) return 1; // belum isi posttest
+                                return 2; // sudah lengkap
+                            };
+                            return getStatus(a) - getStatus(b);
+                        });
+
                         dataTable.clear();
-                        let newData = response.data.map(pasien => {
+                        let newData = sortedData.map(pasien => {
                             let aksiBtn = "";
 
                             if (jumlahKuisioner === 0) {
                                 aksiBtn =
                                     `<span class="badge badge-outline-secondary ">Tidak ada kuisioner tersedia</span>`;
                             } else if (!pasien.hasil_analisis) {
-                                // Belum isi pretest
                                 aksiBtn = `
-                        <a href="/tim_peneliti/kuisioner/pretest/${pasien.id}" class="btn btn-sm btn-outline-primary" title="Isi Pretest">
-                            <i class="ti ti-clipboard-text fs-5"></i> Pretest
-                        </a>
-                    `;
+                <a href="/tim_peneliti/kuisioner/pretest/${pasien.id}" class="btn btn-sm btn-outline-primary" title="Isi Pretest">
+                    <i class="ti ti-clipboard-text fs-5"></i> Pretest
+                </a>
+            `;
                             } else if (pasien.hasil_analisis && pasien.hasil_analisis
                                 .skor_posttest === null) {
-                                // Sudah isi pretest, belum posttest
                                 aksiBtn = `
-                        <a href="/tim_peneliti/kuisioner/posttest/${pasien.id}" class="btn btn-sm btn-outline-success" title="Isi Posttest">
-                            <i class="ti ti-checklist fs-5"></i> Posttest
-                        </a>
-                    `;
+                <a href="/tim_peneliti/kuisioner/posttest/${pasien.id}" class="btn btn-sm btn-outline-success" title="Isi Posttest">
+                    <i class="ti ti-checklist fs-5"></i> Posttest
+                </a>
+            `;
                             } else {
-                                // Sudah isi semua, tidak tampilkan tombol
                                 aksiBtn =
                                     `<span class="badge rounded-pill badge-soft-success">Success</span>`;
                             }

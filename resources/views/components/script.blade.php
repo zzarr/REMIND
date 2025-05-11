@@ -11,5 +11,7 @@
 <script>
     AOS.init();
 </script>
+<script src="//unpkg.com/alpinejs" defer></script>
+
 <!-- App js -->
 <script src="{{ asset('js/app.js') }}"></script>

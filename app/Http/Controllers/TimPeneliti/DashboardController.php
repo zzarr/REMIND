@@ -10,8 +10,14 @@ use App\Models\HasilAnalisis;
 class DashboardController extends Controller
 {
     public function index(){
-        $pretest = Jawaban::where('jenis_test', 'pretest')->count();
-        $posttest = Jawaban::where('jenis_test', 'posttest')->count();
+        $pretest = Jawaban::where('jenis_test', 'pretest')
+                ->distinct('id_pasien')
+                ->count('id_pasien');
+
+        $posttest = Jawaban::where('jenis_test', 'posttest')
+                ->distinct('id_pasien')
+                ->count('id_pasien');
+                
         $riwayatPretest = HasilAnalisis::with('pasien')
             ->whereNotNull('skor_pretest') // hanya data yang sudah diisi
             ->select('id_pasien', 'skor_pretest', 'tanggal_pretest')

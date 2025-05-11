@@ -156,11 +156,11 @@
     <script>
         const chartData = {
             series: [
-                {{ $persenTurun }},
                 {{ $persenNaik }},
+                {{ $persenTurun }},
                 {{ $persenNetral }}
             ],
-            labels: ["Turun", "Naik", "Netral"]
+            labels: ["Naik", "Turun", "Netral"]
         };
 
         // ====== Donut Chart: Devices ======
@@ -195,9 +195,9 @@
             },
             labels: chartData.labels,
             colors: [
-                "#0F9E99", // Solid
-                "rgba(15, 158, 153, 0.7)", // Warna tengah, lebih tebal dari sebelumnya
-                "rgba(15, 158, 153, 0.35)" // Warna lembut tapi tetap kelihatan
+                "#dc3545", // Solid
+                "#ffc107", // Warna tengah, lebih tebal dari sebelumnya
+                "#0d6efd" // Warna lembut tapi tetap kelihatan
             ],
             responsive: [{
                 breakpoint: 600,

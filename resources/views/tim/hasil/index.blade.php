@@ -14,9 +14,10 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>skor Pretest</th>
-                                    <th>skor Posttest</th>
+                                    <th>Skor Pretest</th>
+                                    <th>Skor Posttest</th>
                                     <th>Keterangan</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,6 +31,8 @@
         </div>
 
     </div>
+
+    @include('tim.hasil.detailHasil-modal')
 
 @endsection
 
@@ -67,9 +70,12 @@
                 }
             });
 
+            // 1. Variabel global
+            let hasilAnalisisData = [];
+
             function loadHasilData() {
                 $.ajax({
-                    url: "{{ route('tim_peneliti.hasil.data') }}", // Sesuaikan dengan route API-mu
+                    url: "{{ route('tim_peneliti.hasil.data') }}",
                     method: "GET",
                     dataType: "json",
                     beforeSend: function() {
@@ -78,7 +84,7 @@
                     },
                     success: function(response) {
                         Notiflix.Loading.remove();
-                        console.log("Data dari server:", response); // Debugging
+                        console.log("Data dari server:", response);
 
                         if (!response.data || response.data.length === 0) {
                             console.warn("Data kosong atau tidak ditemukan!");
@@ -87,19 +93,24 @@
                             return;
                         }
 
-                        // **Hapus semua data lama sebelum menambahkan yang baru**
+                        // 2. Simpan ke variabel global
+                        hasilAnalisisData = response.data;
+
+                        // Bersihkan tabel lama
                         dataTable.clear();
 
-                        let newData = response.data.map(hasil => [
+                        let newData = hasilAnalisisData.map(hasil => [
                             hasil.pasien.nama,
-                            hasil.skor_pretest?.toString() || "",
-                            hasil.skor_posttest != null ? hasil.skor_posttest.toString() : "",
-                            hasil.kesimpulan || ""
+                            hasil.skor_pretest?.toString() || "-",
+                            hasil.skor_posttest != null ? hasil.skor_posttest.toString() : "-",
+                            hasil.kesimpulan || "-",
+                            `<a href="#" class="btn btn-sm btn-outline-info edit-btn" data-id="${hasil.pasien.id}" title="detail hasil">
+                    <i class="ti ti-eye fs-5"></i>
+                </a>`
                         ]);
 
-                        console.log("Data yang akan dimasukkan:", newData); // Debugging
+                        console.log("Data yang akan dimasukkan:", newData);
 
-                        // **Tambahkan data baru ke dalam tabel**
                         dataTable.rows().add(newData);
                         dataTable.refresh();
 
@@ -113,6 +124,33 @@
             }
 
             loadHasilData();
+
+            // Delegasi event agar tetap jalan walau tombol dibuat ulang
+            $(document).on('click', '.edit-btn', function(e) {
+                e.preventDefault();
+
+                let id = $(this).data('id'); // Ambil ID pasien
+
+                // Cari data yang sesuai di variabel global
+                let hasil = hasilAnalisisData.find(item => item.pasien.id == id);
+
+                console.log("Data yang ditemukan:", hasil);
+
+                if (hasil) {
+                    // Isi data ke modal
+                    $('#detail-nama').text(hasil.pasien.nama);
+                    $('#detail-pretest').text(hasil.skor_pretest ?? '-');
+                    $('#detail-posttest').text(hasil.skor_posttest ?? '-');
+                    $('#detail-kesimpulan').text(hasil.kesimpulan ?? '-');
+
+                    // Tampilkan modal
+                    $('#modalDetailPasien').modal('show');
+                } else {
+                    console.warn("Data tidak ditemukan untuk ID:", id);
+                }
+            });
+
+
 
 
         });
