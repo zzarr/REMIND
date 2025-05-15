@@ -59,6 +59,28 @@
                             Riwayat Pretest
                         </div>
                         <div class="card-body shadow-custom">
+                            <div class="mb-3">
+                                <label for="select-sesi" class="form-label">Pilih Sesi Pertemuan</label>
+                                <select id="select-sesi" class="form-select">
+                                    <option value="all">Semua Sesi</option>
+                                    @php
+                                        $tanggalSesi = $riwayatPretest
+                                            ->pluck('tanggal_pretest')
+                                            ->unique()
+                                            ->sort()
+                                            ->values();
+                                        $tanggalSesiPertama = $tanggalSesi->first(); // tanggal untuk sesi 1
+                                    @endphp
+                                    @foreach ($tanggalSesi as $index => $tanggal)
+                                        <option value="{{ $tanggal }}"
+                                            {{ $tanggal == $tanggalSesiPertama ? 'selected' : '' }}>
+                                            Sesi {{ $index + 1 }}
+                                            ({{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="table-responsive">
                                 <table class="table mb-0 table-centered">
                                     <thead>
@@ -73,7 +95,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($riwayatPretest as $riwayat)
-                                            <tr>
+                                            <tr data-tanggal="{{ $riwayat->tanggal_pretest }}">
                                                 <td>
                                                     {{ $riwayat->pasien->nama }}
                                                 </td>
@@ -95,6 +117,29 @@
                             Riwayat Posttest
                         </div>
                         <div class="card-body shadow-custom">
+                            <div class="mb-3">
+                                <label for="select-sesi-posttest" class="form-label">Pilih Sesi Pertemuan</label>
+                                <select id="select-sesi-posttest" class="form-select">
+                                    <option value="all">Semua Sesi</option>
+                                    @php
+                                        $tanggalSesiPost = $riwayatPosttest
+                                            ->pluck('tanggal_posttest')
+                                            ->unique()
+                                            ->sort()
+                                            ->values();
+                                        $tanggalSesiPertamaPost = $tanggalSesiPost->first();
+                                    @endphp
+                                    @foreach ($tanggalSesiPost as $index => $tanggal)
+                                        <option value="{{ $tanggal }}"
+                                            {{ $tanggal == $tanggalSesiPertamaPost ? 'selected' : '' }}>
+                                            Sesi {{ $index + 1 }}
+                                            ({{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
                             <div class="table-responsive">
                                 <table class="table mb-0 table-centered">
                                     <thead>
@@ -108,7 +153,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($riwayatPosttest as $riwayat)
-                                            <tr>
+                                            <tr data-tanggal="{{ $riwayat->tanggal_posttest }}">
                                                 <td>
                                                     {{ $riwayat->pasien->nama }}
                                                 </td>
@@ -230,6 +275,47 @@
 
             chartDevice.render();
             chartCircle.render();
+        });
+        $(document).ready(function() {
+            function filterSesi(selectedDate) {
+                $('table tbody tr').each(function() {
+                    const rowDate = $(this).data('tanggal');
+                    if (selectedDate === 'all' || rowDate === selectedDate) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            const defaultDate = $('#select-sesi').val();
+            filterSesi(defaultDate); // langsung filter saat halaman load
+
+            $('#select-sesi').on('change', function() {
+                const selectedDate = $(this).val();
+                filterSesi(selectedDate);
+            });
+
+            function filterSesiPosttest(selectedDate) {
+                // Filter baris khusus posttest
+                $('#select-sesi-posttest').closest('.card-body').find('table tbody tr').each(function() {
+                    const rowDate = $(this).data('tanggal');
+                    if (selectedDate === 'all' || rowDate === selectedDate) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            const defaultDatePosttest = $('#select-sesi-posttest').val();
+            filterSesiPosttest(defaultDatePosttest); // langsung filter saat load
+
+            $('#select-sesi-posttest').on('change', function() {
+                const selectedDate = $(this).val();
+                filterSesiPosttest(selectedDate);
+            });
+
         });
     </script>
 @endpush

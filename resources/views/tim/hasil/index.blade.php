@@ -1,12 +1,16 @@
 @extends('tim.layout.app')
 
-@section('title', 'hasil')
+@section('title', 'Hasil')
 
 @section('content')
     <div class="row justify-content-center align-items-center g-2">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body shadow-custom">
+                    <button id="exportExcel" class="btn btn-outline-success mb-3">
+                        <i class="ti ti-file-export"></i> Export Excel
+                    </button>
+
 
 
                     <div class="table-responsive">
@@ -15,7 +19,9 @@
                                 <tr>
                                     <th>Nama</th>
                                     <th>Skor Pretest</th>
+                                    <th>Tingkat Stres</th>
                                     <th>Skor Posttest</th>
+                                    <th>Tingkat Stres</th>
                                     <th>Keterangan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -51,6 +57,8 @@
     <!-- DataTables JS -->
     <!--<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> -->
     <script src="{{ asset('libs/simple-datatables/umd/simple-datatables.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -102,7 +110,9 @@
                         let newData = hasilAnalisisData.map(hasil => [
                             hasil.pasien.nama,
                             hasil.skor_pretest?.toString() || "-",
+                            hasil.hasil_pretest?.nama_level || "-",
                             hasil.skor_posttest != null ? hasil.skor_posttest.toString() : "-",
+                            hasil.hasil_posttest?.nama_level || "-",
                             hasil.kesimpulan || "-",
                             `<a href="#" class="btn btn-sm btn-outline-info edit-btn" data-id="${hasil.pasien.id}" title="detail hasil">
                     <i class="ti ti-eye fs-5"></i>
@@ -150,9 +160,25 @@
                 }
             });
 
+            document.getElementById('exportExcel').addEventListener('click', function() {
+                // Ambil data dari hasilAnalisisData
+                const dataToExport = hasilAnalisisData.map(hasil => ({
+                    'Nama': hasil.pasien.nama,
+                    'Skor Pretest': hasil.skor_pretest ?? '-',
+                    'Level Stres Pretest': hasil.hasil_pretest?.nama_level ?? '-',
+                    'Skor Posttest': hasil.skor_posttest ?? '-',
+                    'Level Stres Posttest': hasil.hasil_posttest?.nama_level ?? '-',
+                    'Kesimpulan': hasil.kesimpulan ?? '-'
+                }));
 
+                // Buat worksheet dan workbook
+                const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Hasil Analisis");
 
-
+                // Export file
+                XLSX.writeFile(workbook, "hasil_analisis_pasien.xlsx");
+            });
         });
     </script>
 @endpush

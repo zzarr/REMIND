@@ -21,18 +21,18 @@ class DashboardController extends Controller
         $riwayatPretest = HasilAnalisis::with('pasien')
             ->whereNotNull('skor_pretest') // hanya data yang sudah diisi
             ->select('id_pasien', 'skor_pretest', 'tanggal_pretest')
-            ->latest('tanggal_pretest')
+            ->orderBy('tanggal_pretest', 'asc')
             ->get()
             ->unique('id_pasien')
-            ->take(5);
+            ;
 
         $riwayatPosttest = HasilAnalisis::with('pasien')
             ->whereNotNull('skor_posttest') // hanya data yang sudah diisi
             ->select('id_pasien', 'skor_posttest', 'tanggal_posttest')
-            ->latest('tanggal_posttest')
+             ->orderBy('tanggal_posttest', 'asc')
             ->get()
             ->unique('id_pasien')
-            ->take(5);
+            ;
 
         $totalAll = HasilAnalisis::whereNotNull('kesimpulan')->count();
 

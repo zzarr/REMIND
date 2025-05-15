@@ -109,6 +109,7 @@
 
                                     <img src="{{ asset('img/TYPOGRAPHY/remind_typography_white.png') }}" alt=""
                                         class="" height="50">
+                                    <p class="font-18 mt-3">REHABILITASI DENGAN REGULASI EMOSI INDIVIDU.</p>
                                     <div class="border w-75 mx-auto border-warning"></div>
 
 
