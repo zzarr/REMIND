@@ -274,7 +274,7 @@
                             Notiflix.Notify.success(response.message);
                             $("#editAkunForm")[0].reset(); // Reset form
                             $("#editAkun-modal").modal("hide"); // Tutup modal
-
+                            window.location.reload();
                             // Reload tabel tanpa refresh halaman
                             $("#dataTable").DataTable().ajax.reload(null, false);
                         } else {

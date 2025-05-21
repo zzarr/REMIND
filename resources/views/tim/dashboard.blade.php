@@ -66,13 +66,17 @@
                                     @php
                                         $tanggalSesi = $riwayatPretest
                                             ->pluck('tanggal_pretest')
+                                            ->map(function ($item) {
+                                                return \Carbon\Carbon::parse($item)->format('Y-m-d');
+                                            })
                                             ->unique()
                                             ->sort()
                                             ->values();
+
                                         $tanggalSesiPertama = $tanggalSesi->first(); // tanggal untuk sesi 1
                                     @endphp
                                     @foreach ($tanggalSesi as $index => $tanggal)
-                                        <option value="{{ $tanggal }}"
+                                        <option value="{{ \Carbon\Carbon::parse($tanggal)->format('Y-m-d') }}"
                                             {{ $tanggal == $tanggalSesiPertama ? 'selected' : '' }}>
                                             Sesi {{ $index + 1 }}
                                             ({{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }})
@@ -95,7 +99,8 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($riwayatPretest as $riwayat)
-                                            <tr data-tanggal="{{ $riwayat->tanggal_pretest }}">
+                                            <tr
+                                                data-tanggal="{{ \Carbon\Carbon::parse($riwayat->tanggal_pretest)->format('Y-m-d') }}">
                                                 <td>
                                                     {{ $riwayat->pasien->nama }}
                                                 </td>
@@ -124,13 +129,16 @@
                                     @php
                                         $tanggalSesiPost = $riwayatPosttest
                                             ->pluck('tanggal_posttest')
+                                            ->map(function ($item) {
+                                                return \Carbon\Carbon::parse($item)->format('Y-m-d');
+                                            })
                                             ->unique()
                                             ->sort()
                                             ->values();
                                         $tanggalSesiPertamaPost = $tanggalSesiPost->first();
                                     @endphp
                                     @foreach ($tanggalSesiPost as $index => $tanggal)
-                                        <option value="{{ $tanggal }}"
+                                        <option value="{{ \Carbon\Carbon::parse($tanggal)->format('Y-m-d') }}"
                                             {{ $tanggal == $tanggalSesiPertamaPost ? 'selected' : '' }}>
                                             Sesi {{ $index + 1 }}
                                             ({{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }})
@@ -153,7 +161,8 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($riwayatPosttest as $riwayat)
-                                            <tr data-tanggal="{{ $riwayat->tanggal_posttest }}">
+                                            <tr
+                                                data-tanggal="{{ \Carbon\Carbon::parse($riwayat->tanggal_posttest)->format('Y-m-d') }}">
                                                 <td>
                                                     {{ $riwayat->pasien->nama }}
                                                 </td>
@@ -277,6 +286,7 @@
             chartCircle.render();
         });
         $(document).ready(function() {
+
             function filterSesi(selectedDate) {
                 $('table tbody tr').each(function() {
                     const rowDate = $(this).data('tanggal');
@@ -295,6 +305,8 @@
                 const selectedDate = $(this).val();
                 filterSesi(selectedDate);
             });
+
+
 
             function filterSesiPosttest(selectedDate) {
                 // Filter baris khusus posttest

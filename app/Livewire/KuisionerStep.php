@@ -37,6 +37,7 @@ class KuisionerStep extends Component
 
         if ($this->currentIndex >= count($this->pertanyaan)) {
             $this->selesai = true;
+            $this->showModal = true;
         }
     }
 
@@ -62,14 +63,16 @@ class KuisionerStep extends Component
             ]);
         }
 
-        $this->currentIndex++;
-
-        if ($this->currentIndex >= count($this->pertanyaan)) {
+        // pindah otomatis ke soal selanjutnya
+        if ($this->currentIndex < count($this->pertanyaan) - 1) {
+            $this->currentIndex++;
+        } else {
             $this->hitungSkor();
             $this->selesai = true;
             $this->showModal = true;
         }
     }
+
 
     public function hitungSkor()
     {
@@ -125,6 +128,29 @@ class KuisionerStep extends Component
 
         $analisis->save();
     }
+
+    public function sebelumnya()
+    {
+        if ($this->currentIndex > 0) {
+            $this->currentIndex--;
+        }
+    }
+
+    public function selanjutnya()
+    {
+        if ($this->currentIndex < count($this->pertanyaan) - 1) {
+            $this->currentIndex++;
+        }
+    }
+
+    public function goToSoal($index)
+    {
+        if (isset($this->pertanyaan[$index])) {
+            $this->currentIndex = $index;
+        }
+    }
+
+
 
     public function redirectToPasien()
     {

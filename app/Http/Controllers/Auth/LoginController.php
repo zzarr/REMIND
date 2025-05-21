@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -55,4 +56,20 @@ class LoginController extends Controller
             return redirect()->route('tim_peneliti.dashboard'); // Redirect default untuk tim peneliti
         }
     }
+
+    protected function sendFailedLoginResponse(Request $request)
+{
+    $user = \App\Models\User::where('email', $request->email)->first();
+
+    if (!$user) {
+        throw ValidationException::withMessages([
+            'email' => ['Email tidak terdaftar.'],
+        ]);
+    }
+
+    throw ValidationException::withMessages([
+        'password' => ['Password salah.'],
+    ]);
+}
+
 }

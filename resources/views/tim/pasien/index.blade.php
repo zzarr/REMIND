@@ -7,6 +7,11 @@
                 <div class="card-body shadow-custom">
 
                     <div class="table-responsive">
+                        <div id="table-loading"
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        display: none; z-index: 10;">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
                         <table class="table" id="pasien-table">
                             <thead>
                                 <tr>
@@ -37,6 +42,18 @@
     <!-- notiflix -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix/dist/notiflix-3.2.6.min.css" />
     <!-- DataTables CSS -->
+    <style>
+        /* Tambahkan ini di CSS Anda */
+        .notiflix-overlay-custom {
+            position: absolute !important;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 @endpush
 
 @push('script')
@@ -66,6 +83,10 @@
                 }
             });
 
+            function showTableLoading(show) {
+                $('#table-loading').toggle(show);
+            }
+
             function loadPasienData() {
                 const jumlahKuisioner = {{ $kuisioner }}; // dari controller
                 $.ajax({
@@ -85,7 +106,7 @@
                             return;
                         }
 
-                        // Urutkan data: belum isi pretest -> isi pretest tapi belum posttest -> sudah lengkap
+                        // Sortir data berdasarkan status
                         const sortedData = response.data.sort((a, b) => {
                             const getStatus = (pasien) => {
                                 if (!pasien.hasil_analisis) return 0; // belum isi pretest

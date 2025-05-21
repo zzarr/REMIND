@@ -47,8 +47,10 @@
                                         @csrf
                                         <div class="form-group mb-2">
                                             <label class="form-label" for="email">email</label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Enter email">
+                                            <input type="email"
+                                                class="form-control @error('email') is-invalid @enderror" id="email"
+                                                name="email" value="{{ old('email') }}" placeholder="Enter email">
+
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -58,8 +60,10 @@
 
                                         <div class="form-group">
                                             <label class="form-label" for="userpassword">Password</label>
-                                            <input type="password" class="form-control" name="password"
-                                                id="userpassword" placeholder="Enter password">
+                                            <input type="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                name="password" id="userpassword" placeholder="Enter password">
+
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

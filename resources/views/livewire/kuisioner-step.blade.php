@@ -9,14 +9,32 @@
             <a href="{{ route('tim_peneliti.pasien.index') }}" class="btn btn-primary">Kembali ke daftar pasien</a>
         </div>
     @else
+        {{-- 🔵 Tampilkan Navigator Soal --}}
+        <div class="mb-4 text-center">
+            @foreach ($pertanyaan as $i => $q)
+                @php
+                    $idKuis = $q['id'];
+                    $jawabanAda = \App\Models\Jawaban::where('id_pasien', $pasien_id)
+                        ->where('id_kuisioner', $idKuis)
+                        ->where('jenis_test', $jenis)
+                        ->exists();
+                @endphp
+
+                <button wire:click="goToSoal({{ $i }})"
+                    class="btn btn-sm mx-1
+                        {{ $currentIndex === $i ? 'btn-primary' : ($jawabanAda ? 'btn-success' : 'btn-outline-secondary') }}">
+                    {{ $i + 1 }}
+                </button>
+            @endforeach
+        </div>
         @php
             $item = $pertanyaan[$currentIndex];
             $labels = [
-                0 => 'Never',
-                1 => 'Almost Never',
-                2 => 'Sometimes',
-                3 => 'Fairly Often',
-                4 => 'Very Often',
+                0 => 'Tidak Pernah',
+                1 => 'Hampir Tidak Pernah',
+                2 => 'Kadang-kadang',
+                3 => 'Cukup Sering',
+                4 => 'Sangat Sering',
             ];
 
             $jawabanSebelumnya = Jawaban::where('id_pasien', $pasien_id)
@@ -43,6 +61,14 @@
                             <strong>{{ $text }}</strong>
                         </button>
                     @endforeach
+                </div>
+                {{-- ⬇️ Tombol navigasi soal --}}
+                <div class="d-flex justify-content-between mt-3">
+                    <button wire:click="sebelumnya" class="btn btn-secondary"
+                        @if ($currentIndex === 0) disabled @endif>Sebelumnya</button>
+
+                    <button wire:click="selanjutnya" class="btn btn-secondary"
+                        @if ($currentIndex === count($pertanyaan) - 1) disabled @endif>Selanjutnya</button>
                 </div>
             </div>
         </div>
