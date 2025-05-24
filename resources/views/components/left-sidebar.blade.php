@@ -24,6 +24,7 @@
                 <img src="assets/images/logo.png" alt="logo-large" class="logo-lg logo-light">
                 <img src="{{ asset('img/TYPOGRAPHY/remind_typography_black.png') }}" alt="logo-large"
                     class="logo-lg logo-dark" data-aos="fade-left" data-aos-duration="1200">
+
             </span>
         </a>
     </div>

@@ -66,8 +66,6 @@
 
     <script>
         $(document).ready(function() {
-
-
             const dataTable = new simpleDatatables.DataTable("#pasien-table", {
                 searchable: true,
                 fixedHeight: false,

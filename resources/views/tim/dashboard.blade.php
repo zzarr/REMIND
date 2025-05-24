@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-9">
-            <div class="row justifify-content-center">
+            <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="card  rounded-3">
                         <div class="card-header bg-healt">
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table mb-0 table-centered">
+                                <table class="table mb-0 table-centered riwayat-pretest">
                                     <thead>
 
                                         <tr>
@@ -149,7 +149,7 @@
 
 
                             <div class="table-responsive">
-                                <table class="table mb-0 table-centered">
+                                <table class="table mb-0 table-centered riwayat-posttest">
                                     <thead>
                                         <tr>
                                             <th>Nama</th>
@@ -287,8 +287,9 @@
         });
         $(document).ready(function() {
 
-            function filterSesi(selectedDate) {
-                $('table tbody tr').each(function() {
+            function filterTableByDate(selectId, tableBodySelector) {
+                const selectedDate = $(selectId).val();
+                $(tableBodySelector + ' tr').each(function() {
                     const rowDate = $(this).data('tanggal');
                     if (selectedDate === 'all' || rowDate === selectedDate) {
                         $(this).show();
@@ -298,35 +299,16 @@
                 });
             }
 
-            const defaultDate = $('#select-sesi').val();
-            filterSesi(defaultDate); // langsung filter saat halaman load
-
+            filterTableByDate('#select-sesi', '.riwayat-pretest tbody');
             $('#select-sesi').on('change', function() {
-                const selectedDate = $(this).val();
-                filterSesi(selectedDate);
+                filterTableByDate('#select-sesi', '.riwayat-pretest tbody');
             });
 
-
-
-            function filterSesiPosttest(selectedDate) {
-                // Filter baris khusus posttest
-                $('#select-sesi-posttest').closest('.card-body').find('table tbody tr').each(function() {
-                    const rowDate = $(this).data('tanggal');
-                    if (selectedDate === 'all' || rowDate === selectedDate) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            }
-
-            const defaultDatePosttest = $('#select-sesi-posttest').val();
-            filterSesiPosttest(defaultDatePosttest); // langsung filter saat load
-
+            filterTableByDate('#select-sesi-posttest', '.riwayat-posttest tbody');
             $('#select-sesi-posttest').on('change', function() {
-                const selectedDate = $(this).val();
-                filterSesiPosttest(selectedDate);
+                filterTableByDate('#select-sesi-posttest', '.riwayat-posttest tbody');
             });
+
 
         });
     </script>
