@@ -45,7 +45,7 @@
 
         @if ($jawabanSebelumnya)
             <div class="alert alert-info">
-                Jawaban sebelumnya: <strong>{{ $jawabanSebelumnya->label }}</strong>
+                Jawaban sebelumnya: <strong>{{ $labels[$jawabanSebelumnya->nilai] ?? '-' }}</strong>
             </div>
         @endif
 

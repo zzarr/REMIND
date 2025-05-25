@@ -49,17 +49,21 @@ class KuisionerStep extends Component
 
         $finalNilai = $kuis['is_positive'] ? (4 - $nilai) : $nilai;
 
-        $exists = Jawaban::where('id_pasien', $this->pasien_id)
-            ->where('id_kuisioner', $kuis['id'])
-            ->where('jenis_test', $this->jenis)
-            ->exists();
+        $existing = Jawaban::where('id_pasien', $this->pasien_id)
+                ->where('id_kuisioner', $kuis['id'])
+                ->where('jenis_test', $this->jenis)
+                ->first();
 
-        if (!$exists) {
+        if (!$existing) {
             Jawaban::create([
                 'id_kuisioner' => $kuis['id'],
                 'id_pasien' => $this->pasien_id,
                 'nilai' => $finalNilai,
                 'jenis_test' => $this->jenis
+            ]);
+        }else{
+            $existing->update([
+                'nilai' => $finalNilai
             ]);
         }
 
