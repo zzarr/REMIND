@@ -20,22 +20,14 @@ class KuisionerStep extends Component
     {
         $this->pasien_id = $pasien_id;
         $this->jenis = $jenis;
-        $this->pertanyaan = Kuisioner::all()->toArray();
-
-        // Cari index pertanyaan yang belum dijawab
         $jawabanTerdahulu = Jawaban::where('id_pasien', $this->pasien_id)
             ->where('jenis_test', $this->jenis)
-            ->pluck('id_kuisioner')
-            ->toArray();
+            ->pluck('id_kuisioner');
 
-        foreach ($this->pertanyaan as $i => $soal) {
-            if (!in_array($soal['id'], $jawabanTerdahulu)) {
-                $this->currentIndex = $i;
-                break;
-            }
-        }
+        $this->pertanyaan = Kuisioner::whereNotIn('id', $jawabanTerdahulu)->get()->toArray();
+        $this->currentIndex = 0;
 
-        if ($this->currentIndex >= count($this->pertanyaan)) {
+        if (empty($this->pertanyaan)) {
             $this->selesai = true;
             $this->showModal = true;
         }
@@ -85,41 +77,27 @@ class KuisionerStep extends Component
             ->sum('nilai');
 
         $maxNilai = Kuisioner::count() * 4;
-        $rendah = TingkatStres::where('nama_level', 'rendah')->value('nilai_max');
-        $sedang = TingkatStres::where('nama_level', 'sedang')->value('nilai_max');
+        $persentase = $total / $maxNilai * 100;
+
+        $tingkatStres = TingkatStres::pluck('nilai_max', 'nama_level');
+        $idTingkatStres = TingkatStres::pluck('id', 'nama_level');
+
+        $level = match (true) {
+            $persentase <= $tingkatStres['rendah'] => $idTingkatStres['rendah'],
+            $persentase <= $tingkatStres['sedang'] => $idTingkatStres['sedang'],
+            default => $idTingkatStres['tinggi'],
+        };
 
         $analisis = HasilAnalisis::firstOrNew(['id_pasien' => $this->pasien_id]);
 
         if ($this->jenis === 'pretest') {
             $analisis->skor_pretest = $total;
             $analisis->tanggal_pretest = now();
-            $persentase = $total /  $maxNilai * 100;
-
-            if($persentase <= $rendah){
-                $analisis->hasil_pretest = TingkatStres::where('nama_level', 'rendah')->value('id');
-            }
-            elseif ($persentase <= $sedang) {
-                $analisis->hasil_pretest = TingkatStres::where('nama_level', 'sedang')->value('id');
-            }
-            else{
-                $analisis->hasil_pretest = TingkatStres::where('nama_level', 'tinggi')->value('id');
-            }
-
+            $analisis->hasil_pretest = $level;
         } else {
             $analisis->skor_posttest = $total;
             $analisis->tanggal_posttest = now();
-
-            $persentase = $total /  $maxNilai * 100;
-
-            if($persentase <= $rendah){
-                $analisis->hasil_posttest = TingkatStres::where('nama_level', 'rendah')->value('id');
-            }
-            elseif ($persentase <= $sedang) {
-                $analisis->hasil_posttest = TingkatStres::where('nama_level', 'sedang')->value('id');
-            }
-            else{
-                $analisis->hasil_posttest = TingkatStres::where('nama_level', 'tinggi')->value('id');
-            }
+            $analisis->hasil_posttest = $level;
 
             if (!is_null($analisis->skor_pretest)) {
                 $analisis->kesimpulan = match (true) {
@@ -132,6 +110,7 @@ class KuisionerStep extends Component
 
         $analisis->save();
     }
+
 
     public function sebelumnya()
     {
