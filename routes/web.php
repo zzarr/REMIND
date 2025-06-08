@@ -72,6 +72,12 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
             Route::delete('/delete/{id}', [KuisionerController::class, 'destroy'])->name('delete');
           
         });
+
+        Route::group(['prefix' => 'meta-data', 'as' => 'meta-data.'], function ()  {
+            Route::get('/', function (){
+                return view('operator.meta-data.tingkat-stres');
+            })->name('tingkat-stres');
+        });
     });
 
 });

@@ -58,6 +58,10 @@
                             <a class="nav-link" href="{{ route('operator.kuisioner.index') }}"><i
                                     class="ti ti-clipboard menu-icon"></i><span>Kuisioner</span></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('operator.meta-data.tingkat-stres') }}"><i
+                                    class="ti ti-clipboard menu-icon"></i><span>Meta Data</span></a>
+                        </li>
                     @endif
 
                     <!-- Menu ini hanya untuk role 'tim peneliti' -->

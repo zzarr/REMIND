@@ -79,13 +79,12 @@ class KuisionerStep extends Component
         $maxNilai = Kuisioner::count() * 4;
         $persentase = $total / $maxNilai * 100;
 
-        $tingkatStres = TingkatStres::pluck('nilai_max', 'nama_level');
-        $idTingkatStres = TingkatStres::pluck('id', 'nama_level');
+        $tingkatStresData = TingkatStres::all()->keyBy('nama_level');
 
         $level = match (true) {
-            $persentase <= $tingkatStres['rendah'] => $idTingkatStres['rendah'],
-            $persentase <= $tingkatStres['sedang'] => $idTingkatStres['sedang'],
-            default => $idTingkatStres['tinggi'],
+            $persentase <= $tingkatStresData['rendah']->nilai_max => $tingkatStresData['rendah']->id,
+            $persentase <= $tingkatStresData['sedang']->nilai_max => $tingkatStresData['sedang']->id,
+            default => $tingkatStresData['tinggi']->id,
         };
 
         $analisis = HasilAnalisis::firstOrNew(['id_pasien' => $this->pasien_id]);

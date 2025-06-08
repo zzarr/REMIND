@@ -7,18 +7,19 @@
                 <div class="col-lg-4">
                     <div class="card  rounded-3">
                         <div class="card-header bg-healt">
-                            <p class="text-white mb-0 fw-semibold">Pasien</p>
+
                         </div>
                         <div class="card-body shadow-custom">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
 
                                     <h3 class="my-1 font-20 fw-bold ">{{ $pasien }}</h3>
+                                    <h6 class="text-uppercase text-muted mt-2 m-0 font-11">Pasien</h6>
 
                                 </div><!--end col-->
                                 <div class="col-3 align-self-center">
 
-                                    <i class="fas fa-bed font-24 align-self-center "></i>
+                                    <i class="fas fa-bed font-40 align-self-center "></i>
 
                                 </div><!--end col-->
                             </div><!--end row-->
@@ -28,18 +29,19 @@
                 <div class="col-lg-4">
                     <div class="card  rounded-3 shadow-custom">
                         <div class="card-header bg-healt">
-                            <p class="text-white mb-0 fw-semibold">Tim Peneliti</p>
+                            <p class="text-white mb-0 fw-semibold"></p>
                         </div>
                         <div class="card-body ">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
 
                                     <h3 class="my-1 font-20 fw-bold ">{{ $user }}</h3>
+                                    <h6 class="text-uppercase text-muted mt-2 m-0 font-11">Tim Peneliti</h6>
 
                                 </div><!--end col-->
                                 <div class="col-3 align-self-center">
 
-                                    <i class="ti ti-users font-24 align-self-center "></i>
+                                    <i class="ti ti-users font-40 align-self-center "></i>
 
                                 </div><!--end col-->
                             </div><!--end row-->
@@ -49,18 +51,20 @@
                 <div class="col-lg-4">
                     <div class="card  rounded-3 shadow-custom">
                         <div class="card-header bg-healt">
-                            <p class="text-white mb-0 fw-semibold">Kuisioner</p>
+
                         </div>
                         <div class="card-body ">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-9">
 
-                                    <h3 class="my-1 font-20 fw-bold ">24k</h3>
+                                    <h3 class="my-1 font-20 fw-bold ">{{ $kuisioner }}</h3>
+                                    <h6 class="text-uppercase text-muted mt-2 m-0 font-11">Kuisioner</h6>
+
 
                                 </div><!--end col-->
                                 <div class="col-3 align-self-center">
 
-                                    <i class="ti ti-clipboard-list font-24 align-self-center "></i>
+                                    <i class="ti ti-clipboard-list font-40 align-self-center "></i>
 
                                 </div><!--end col-->
                             </div><!--end row-->
@@ -69,98 +73,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header bg-healt text-white">
-                            Riwayat Pretest
-                        </div>
-                        <div class="card-body shadow-custom">
-                            <div class="table-responsive">
-                                <table class="table mb-0 table-centered">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Umur</th>
-                                            <th>Tanggal Pretest</th>
-                                            <th>Hasil</th>
-                                            <th class="text-end">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                Ahmad
-                                            </td>
-                                            <td>14</td>
-                                            <td>11-11-2024</td>
-                                            <td>30 </td>
-                                            <td class="text-end">
-                                                <div class="dropdown d-inline-block">
-                                                    <a class="dropdown-toggle arrow-none" id="dLabel11"
-                                                        data-bs-toggle="dropdown" href="#" role="button"
-                                                        aria-haspopup="false" aria-expanded="false">
-                                                        <i class="las la-ellipsis-v font-20 text-muted"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11">
-                                                        <a class="dropdown-item" href="#">Creat Project</a>
-                                                        <a class="dropdown-item" href="#">Open Project</a>
-                                                        <a class="dropdown-item" href="#">Tasks Details</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table><!--end /table-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 ">
-                    <div class="card">
-                        <div class="card-header bg-healt text-white">
-                            Riwayat Posttest
-                        </div>
-                        <div class="card-body shadow-custom">
-                            <div class="table-responsive">
-                                <table class="table mb-0 table-centered">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Umur</th>
-                                            <th>Tanggal Posttest</th>
-                                            <th>Hasil</th>
-                                            <th class="text-end">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                Ahmad
-                                            </td>
-                                            <td>14</td>
-                                            <td>11-11-2024</td>
-                                            <td>30 </td>
-                                            <td class="text-end">
-                                                <div class="dropdown d-inline-block">
-                                                    <a class="dropdown-toggle arrow-none" id="dLabel11"
-                                                        data-bs-toggle="dropdown" href="#" role="button"
-                                                        aria-haspopup="false" aria-expanded="false">
-                                                        <i class="las la-ellipsis-v font-20 text-muted"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11">
-                                                        <a class="dropdown-item" href="#">Creat Project</a>
-                                                        <a class="dropdown-item" href="#">Open Project</a>
-                                                        <a class="dropdown-item" href="#">Tasks Details</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table><!--end /table-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div> <!-- end col-lg-9 -->
     </div>

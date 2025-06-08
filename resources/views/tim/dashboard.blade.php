@@ -18,7 +18,7 @@
                                 </div><!--end col-->
                                 <div class="col-3 align-self-center">
 
-                                    <i class="fas fa-clipboard-list font-24 align-self-center "></i>
+                                    <i class="fas fa-clipboard-list font-40 align-self-center "></i>
 
                                 </div><!--end col-->
                             </div><!--end row-->
@@ -39,7 +39,7 @@
                                 </div><!--end col-->
                                 <div class="col-3 align-self-center">
 
-                                    <i class="fas fa-clipboard-list font-24 align-self-center "></i>
+                                    <i class="fas fa-clipboard-list font-40 align-self-center "></i>
 
                                 </div><!--end col-->
                             </div><!--end row-->

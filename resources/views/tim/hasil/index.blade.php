@@ -58,6 +58,7 @@
     <!--<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> -->
     <script src="{{ asset('libs/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="{{ asset('libs/apexcharts/apexcharts.min.js') }}"></script>
 
 
     <script>
@@ -114,7 +115,7 @@
                             hasil.skor_posttest != null ? hasil.skor_posttest.toString() : "-",
                             hasil.hasil_posttest?.nama_level || "-",
                             hasil.kesimpulan || "-",
-                            `<a href="#" class="btn btn-sm btn-outline-info edit-btn" data-id="${hasil.pasien.id}" title="detail hasil">
+                            `<a href="#" class="btn btn-sm btn-outline-info detail-btn" data-id="${hasil.pasien.id}" title="detail hasil">
                     <i class="ti ti-eye fs-5"></i>
                 </a>`
                         ]);
@@ -136,7 +137,7 @@
             loadHasilData();
 
             // Delegasi event agar tetap jalan walau tombol dibuat ulang
-            $(document).on('click', '.edit-btn', function(e) {
+            $(document).on('click', '.detail-btn', function(e) {
                 e.preventDefault();
 
                 let id = $(this).data('id'); // Ambil ID pasien
@@ -152,6 +153,62 @@
                     $('#detail-pretest').text(hasil.skor_pretest ?? '-');
                     $('#detail-posttest').text(hasil.skor_posttest ?? '-');
                     $('#detail-kesimpulan').text(hasil.kesimpulan ?? '-');
+
+                    const optionsLine1 = {
+                        series: [{
+                            data: [0, hasil.skor_pretest, hasil.skor_posttest ??
+                                '0'
+                            ] // titik awal, pretest, posttest
+                        }],
+                        chart: {
+                            height: 350,
+                            type: "line",
+                            zoom: {
+                                enabled: false
+                            }
+                        },
+                        colors: ["#008ffb"],
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            curve: "straight",
+                            width: [3]
+                        },
+                        title: {
+                            text: "Hasil Pretest dan Posttest",
+                            align: "left"
+                        },
+                        grid: {
+                            row: {
+                                colors: ["#f3f3f3", "transparent"],
+                                opacity: 0.5
+                            }
+                        },
+                        xaxis: {
+                            categories: [" - ", "Pretest", "Posttest"]
+                        },
+                        yaxis: {
+                            min: 0,
+                            max: 40,
+                            tickAmount: 4,
+                            labels: {
+                                formatter: function(value) {
+                                    return value.toFixed(0); // tampilkan sebagai angka bulat
+                                }
+                            }
+                        }
+                    };
+
+                    // Hapus chart sebelumnya jika sudah ada
+                    if (window.chartLine1) {
+                        window.chartLine1.destroy();
+                    }
+
+
+                    // Render chart untuk #apex_line1
+                    const chartLine1 = new ApexCharts(document.querySelector("#apex_line1"), optionsLine1);
+                    chartLine1.render();
 
                     // Tampilkan modal
                     $('#modalDetailPasien').modal('show');
@@ -179,6 +236,11 @@
                 // Export file
                 XLSX.writeFile(workbook, "hasil_analisis_pasien.xlsx");
             });
+
+            // Konfigurasi chart Pretest dan Posttest dengan titik awal 0
+
+
+
         });
     </script>
 @endpush
