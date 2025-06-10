@@ -50,13 +50,13 @@ class AkunController extends Controller
 
     public function update(Request $request, $id)
     {
-       
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $id,
+            'name' => 'string|max:255',
+            'email' => 'email|max:255|unique:users,email,' . $id,
+            'role' => 'string|in:operator,tim peneliti', // sesuaikan dengan role yang tersedia
+            'password' => 'nullable|string|min:6', // gunakan konfirmasi jika dari form
         ]);
-    
-        
+
         $user = User::find($id);
         if (!$user) {
             return response()->json([
@@ -64,19 +64,25 @@ class AkunController extends Controller
                 'message' => 'Akun tidak ditemukan',
             ], 404);
         }
-    
-        
+
+        // Update data
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
+        $user->role = $validatedData['role'];
 
-    
+        // Jika password diisi, update password
+        if (!empty($validatedData['password'])) {
+            $user->password = bcrypt($validatedData['password']);
+        }
+
         $user->save();
-    
+
         return response()->json([
             'success' => true,
             'message' => 'Akun berhasil diperbarui',
         ]);
     }
+
 
         public function destroy($id)
     {

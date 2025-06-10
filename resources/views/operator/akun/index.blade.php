@@ -251,6 +251,7 @@
                     name: $("#edit-name").val(),
                     email: $("#edit-email").val(),
                     role: $("#edit-role").val(),
+                    password: confirmPassword,
                     _token: $('meta[name="csrf-token"]').attr("content") // Ambil CSRF token dari meta
                 };
 
