@@ -80,6 +80,7 @@ Route::middleware(['auth', 'role:operator'])->group(function () {
         });
     });
 
+    
 });
 
 

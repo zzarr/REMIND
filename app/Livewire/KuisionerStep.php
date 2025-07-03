@@ -76,15 +76,13 @@ class KuisionerStep extends Component
             ->where('jenis_test', $this->jenis)
             ->sum('nilai');
 
-        $maxNilai = Kuisioner::count() * 4;
-        $persentase = $total / $maxNilai * 100;
-
-        $tingkatStresData = TingkatStres::all()->keyBy('nama_level');
+        // Ambil konfigurasi rentang skor dari config file
+        $tingkatStres = config('tingkat_stres');
 
         $level = match (true) {
-            $persentase <= $tingkatStresData['rendah']->nilai_max => $tingkatStresData['rendah']->id,
-            $persentase <= $tingkatStresData['sedang']->nilai_max => $tingkatStresData['sedang']->id,
-            default => $tingkatStresData['tinggi']->id,
+            $total >= $tingkatStres['rendah']['min'] && $total <= $tingkatStres['rendah']['max'] => 'rendah',
+            $total >= $tingkatStres['sedang']['min'] && $total <= $tingkatStres['sedang']['max'] => 'sedang',
+            default => 'tinggi',
         };
 
         $analisis = HasilAnalisis::firstOrNew(['id_pasien' => $this->pasien_id]);
