@@ -15,12 +15,12 @@ class HasilAnalisisConroller extends Controller
     }
 
     public function data (){
-        $data = HasilAnalisis::with('pasien','hasilPretest', 'hasilPosttest')->get();
+        $data = HasilAnalisis::with('pasien')->get();
         return DataTables::of($data)->make(true);
     }
 
     public function show ($id){
-        $data = HasilAnalisis::with('pasien','hasilPretest', 'hasilPosttest')->findOrFail($id);
+        $data = HasilAnalisis::with('pasien')->findOrFail($id);
         return response()->json($data);
     }
 }

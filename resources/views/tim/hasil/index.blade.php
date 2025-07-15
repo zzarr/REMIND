@@ -111,9 +111,9 @@
                         let newData = hasilAnalisisData.map(hasil => [
                             hasil.pasien.nama,
                             hasil.skor_pretest?.toString() || "-",
-                            hasil.hasil_pretest?.nama_level || "-",
+                            hasil.hasil_pretest || "-",
                             hasil.skor_posttest != null ? hasil.skor_posttest.toString() : "-",
-                            hasil.hasil_posttest?.nama_level || "-",
+                            hasil.hasil_posttest || "-",
                             hasil.kesimpulan || "-",
                             `<a href="#" class="btn btn-sm btn-outline-info detail-btn" data-id="${hasil.pasien.id}" title="detail hasil">
                     <i class="ti ti-eye fs-5"></i>
@@ -222,9 +222,9 @@
                 const dataToExport = hasilAnalisisData.map(hasil => ({
                     'Nama': hasil.pasien.nama,
                     'Skor Pretest': hasil.skor_pretest ?? '-',
-                    'Level Stres Pretest': hasil.hasil_pretest?.nama_level ?? '-',
+                    'Level Stres Pretest': hasil.hasil_pretest ?? '-',
                     'Skor Posttest': hasil.skor_posttest ?? '-',
-                    'Level Stres Posttest': hasil.hasil_posttest?.nama_level ?? '-',
+                    'Level Stres Posttest': hasil.hasil_posttest ?? '-',
                     'Kesimpulan': hasil.kesimpulan ?? '-'
                 }));
 

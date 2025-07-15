@@ -19,11 +19,5 @@ class HasilAnalisis extends Model
         return $this->belongsTo(Pasien::class, 'id_pasien');
     }
 
-    public function hasilPretest() {
-        return $this->belongsTo(TingkatStres::class, 'hasil_pretest');
-    }
-
-    public function hasilPosttest() {
-        return $this->belongsTo(TingkatStres::class, 'hasil_posttest');
-    }
+    
 }

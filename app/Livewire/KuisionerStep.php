@@ -6,7 +6,6 @@ use Livewire\Component;
 use App\Models\Kuisioner;
 use App\Models\Jawaban;
 use App\Models\HasilAnalisis;
-use App\Models\TingkatStres;
 
 class KuisionerStep extends Component
 {
@@ -20,12 +19,12 @@ class KuisionerStep extends Component
     {
         $this->pasien_id = $pasien_id;
         $this->jenis = $jenis;
+
         $jawabanTerdahulu = Jawaban::where('id_pasien', $this->pasien_id)
             ->where('jenis_test', $this->jenis)
             ->pluck('id_kuisioner');
 
         $this->pertanyaan = Kuisioner::whereNotIn('id', $jawabanTerdahulu)->get()->toArray();
-        $this->currentIndex = 0;
 
         if (empty($this->pertanyaan)) {
             $this->selesai = true;
@@ -38,28 +37,26 @@ class KuisionerStep extends Component
         if (!isset($this->pertanyaan[$this->currentIndex])) return;
 
         $kuis = $this->pertanyaan[$this->currentIndex];
-
         $finalNilai = $kuis['is_positive'] ? (4 - $nilai) : $nilai;
 
         $existing = Jawaban::where('id_pasien', $this->pasien_id)
-                ->where('id_kuisioner', $kuis['id'])
-                ->where('jenis_test', $this->jenis)
-                ->first();
+            ->where('id_kuisioner', $kuis['id'])
+            ->where('jenis_test', $this->jenis)
+            ->first();
 
         if (!$existing) {
             Jawaban::create([
                 'id_kuisioner' => $kuis['id'],
                 'id_pasien' => $this->pasien_id,
                 'nilai' => $finalNilai,
-                'jenis_test' => $this->jenis
+                'jenis_test' => $this->jenis,
             ]);
-        }else{
+        } else {
             $existing->update([
-                'nilai' => $finalNilai
+                'nilai' => $finalNilai,
             ]);
         }
 
-        // pindah otomatis ke soal selanjutnya
         if ($this->currentIndex < count($this->pertanyaan) - 1) {
             $this->currentIndex++;
         } else {
@@ -69,14 +66,12 @@ class KuisionerStep extends Component
         }
     }
 
-
     public function hitungSkor()
     {
         $total = Jawaban::where('id_pasien', $this->pasien_id)
             ->where('jenis_test', $this->jenis)
             ->sum('nilai');
 
-        // Ambil konfigurasi rentang skor dari config file
         $tingkatStres = config('tingkat_stres');
 
         $level = match (true) {
@@ -108,7 +103,6 @@ class KuisionerStep extends Component
         $analisis->save();
     }
 
-
     public function sebelumnya()
     {
         if ($this->currentIndex > 0) {
@@ -129,8 +123,6 @@ class KuisionerStep extends Component
             $this->currentIndex = $index;
         }
     }
-
-
 
     public function redirectToPasien()
     {
