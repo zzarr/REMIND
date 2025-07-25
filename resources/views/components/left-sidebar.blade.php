@@ -51,12 +51,12 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('operator.pasien.index') }}"><i
-                                    class="fas fa-bed menu-icon"></i><span>Pasien</span></a>
+                                    class="fas fa-bed menu-icon"></i><span>Manajemen Pasien</span></a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('operator.kuisioner.index') }}"><i
-                                    class="ti ti-clipboard menu-icon"></i><span>Kuisioner</span></a>
+                                    class="ti ti-clipboard menu-icon"></i><span>Manajemen Kuisioner</span></a>
                         </li>
                     @endif
 

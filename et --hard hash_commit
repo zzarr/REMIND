@@ -1,0 +1,203 @@
+[33mcommit 968e90475592e8a7aecd2b23b6f8f05a5c49a6c7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Mon Jul 21 15:02:28 2025 +0700
+
+    up
+
+[33mcommit 2fef1c134ae1ab49ce2adf43ce0d783eba780b31[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Tue Jul 15 21:39:44 2025 +0700
+
+    up
+
+[33mcommit ad8c879c48c657f34edc5f4f96c8ff714342d414[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Thu Jul 3 21:20:56 2025 +0700
+
+    update migration
+
+[33mcommit 519f63bae12998916e5f647381bfac42da5454f4[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Tue Jun 10 21:56:24 2025 +0700
+
+    update
+
+[33mcommit 5140142577b2436af4fdd4c2d8336bf3e2d07708[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sun Jun 8 18:14:39 2025 +0700
+
+    update
+
+[33mcommit 659b0191b50a6cfdb265dd125bd27c8844f4ad08[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Mon Jun 2 23:20:05 2025 +0700
+
+    up
+
+[33mcommit 4886a8659809e0433b1e788cce7af37cc1b29ee3[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sun May 25 23:50:25 2025 +0700
+
+    bug fix
+
+[33mcommit c5f67fad3e487e03deb612db9e6dd8741c324a48[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sun May 25 00:38:41 2025 +0700
+
+    up
+
+[33mcommit 06065d8eb0fd8c2cc33e6e7c90daa49279e50d91[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Wed May 21 14:25:44 2025 +0700
+
+    bug fix
+
+[33mcommit 99231ff2175f297045b1cd680a1a3b9144fffb8f[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Thu May 15 14:52:17 2025 +0700
+
+    filter tangall
+
+[33mcommit 25ebc733ca5a01fa244be95ba441b4b73e253009[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Mon May 12 00:14:38 2025 +0700
+
+    up
+
+[33mcommit ccfc90c27dd99c2bfc39d27dce135f29dd4c71da[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Tue Apr 29 21:32:53 2025 +0700
+
+    up
+
+[33mcommit c1b3809726a84d8be22aaae7295bb83157bb629b[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Mon Apr 28 00:19:05 2025 +0700
+
+    add tailwind css
+
+[33mcommit 39e525dc2d63d0176aca914f587f1cb3a49b8147[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Wed Apr 23 20:57:05 2025 +0700
+
+    some fix
+
+[33mcommit 7ff00d1b7dc657adc900032f29bb29bcc30043dc[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Wed Apr 23 18:37:50 2025 +0700
+
+    up
+
+[33mcommit d4d5ed6ef3a3d6def06285ffa38586dee79cea70[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Wed Apr 16 09:45:24 2025 +0700
+
+    create: kuisioner
+
+[33mcommit 7767af4a84728100e6e70a458231af4d5167188e[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Fri Apr 4 22:43:39 2025 +0700
+
+    up
+
+[33mcommit ba8ba021d750821ee8047b01e22cf52d0c5f22ae[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Thu Apr 3 22:29:27 2025 +0700
+
+    bug fix
+
+[33mcommit 8ebc77d91cc131520df53b9becca6845604c78e7[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Tue Apr 1 17:44:02 2025 +0700
+
+    up
+
+[33mcommit d73b926cc7c1558123930ce2c4cdeed88076f878[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Mon Mar 31 20:39:14 2025 +0700
+
+    up
+
+[33mcommit b7936ea554370595ab7a82e3dacea4c6be47d4cc[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sat Mar 29 01:29:42 2025 +0700
+
+    up
+
+[33mcommit b237895a07feaf3678720ef5a2f189f97a799f86[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sun Mar 23 00:27:25 2025 +0700
+
+    add pasien & kuisioner
+
+[33mcommit 740b460cc02ab99af6955a4d27df3209662c0a60[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sat Mar 22 22:04:36 2025 +0700
+
+    add pasien
+
+[33mcommit 95a7b483f8b5765ff0b6a69325de1ac4d4be21c9[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Fri Mar 21 21:28:04 2025 +0700
+
+    up
+
+[33mcommit 87f41e4e4213d7bb0c0ffe04f4432273fa8d1403[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Fri Mar 21 00:29:15 2025 +0700
+
+    up
+
+[33mcommit b203103b11fa6332cb2e0ae267d659850f087c31[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Thu Mar 20 14:34:58 2025 +0700
+
+    add create akun modal & store akun controller
+
+[33mcommit 53977e1e919be91045fa1d41538fd6388e45a6cb[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Thu Mar 20 12:53:35 2025 +0700
+
+    up
+
+[33mcommit 2f134f70eede2434b72c46d5ae77633622b14008[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Thu Mar 20 02:41:20 2025 +0700
+
+    up
+
+[33mcommit 03af8fab1abe688dd1a2d615f8ab80f1d90bca61[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Tue Mar 18 23:32:50 2025 +0700
+
+    update
+
+[33mcommit ccba121348150c3f4dfb09e8b6c3aafcebc9a7b1[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Tue Mar 18 19:28:02 2025 +0700
+
+    add migration and model
+
+[33mcommit bff29f7a5b5f444a1630fde8475f1e4af5d34d24[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sat Mar 15 10:42:29 2025 -0500
+
+    update dasboard
+
+[33mcommit f0ef5d991393ffa2d5087894b56f32ce6a23e361[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sat Mar 15 10:05:20 2025 -0500
+
+    update dasboard
+
+[33mcommit 2542db8a03bb275f9c5c9abb8bad42f19bc62b92[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Sat Mar 15 00:12:25 2025 -0500
+
+    update ui
+
+[33mcommit d4e9e292bb13f2eae68e40cd3e2d0aa06077a91a[m
+Author: zzarr <azharsyah.curug@gmail.com>
+Date:   Fri Mar 14 21:42:48 2025 +0700
+
+    first commit
