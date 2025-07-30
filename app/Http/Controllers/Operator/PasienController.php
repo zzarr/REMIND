@@ -41,7 +41,7 @@ class PasienController extends Controller
         // return response JSON dengan pesan sukses
         return response()->json([
             'success' => true, // Ubah dari 'status' menjadi 'success'
-            'message' => 'Akun berhasil ditambahkan',
+            'message' => 'Pasien berhasil ditambahkan',
         ]);
 
     }

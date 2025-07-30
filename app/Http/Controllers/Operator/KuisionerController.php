@@ -8,41 +8,60 @@ use App\Models\Kuisioner;
 
 class KuisionerController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('operator.kuisioner.index');
     }
 
-    public function data(){
+    public function data()
+    {
         $data = Kuisioner::all();
-        return datatables()->of($data)
-            ->addIndexColumn()
-            ->make(true);
+        return datatables()->of($data)->addIndexColumn()->make(true);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'pertanyaan' => 'required',
-            'is_positive' => 'required'
-        ]);
-
-        if ($request->is_positive == 'true') {
-            $is_positive = 1;
-        } else {
-            $is_positive = 0;
+    public function store(Request $request)
+    {
+        $sum = Kuisioner::count();
+        if ($sum >= 10) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Kuisioner sudah mencapai batas maksimal 10 pertanyaan.',
+                ],
+                400,
+            );
         }
 
-        Kuisioner::create([
-            'pertanyaan' => $request->pertanyaan,
-            'is_positive' => $is_positive
+        $request->validate([
+            'pertanyaan' => 'required',
+            'is_positive' => 'required',
         ]);
 
-        return response()->json([
-            'success' => true, // Ubah dari 'status' menjadi 'success'
-            'message' => 'Akun berhasil ditambahkan',
-        ]);
+        $is_positive = filter_var($request->is_positive, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
+
+        try {
+            Kuisioner::create([
+                'pertanyaan' => $request->pertanyaan,
+                'is_positive' => $is_positive,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Pertanyaan kuisioner berhasil ditambahkan',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan saat menambahkan pertanyaan.',
+                ],
+                500,
+            );
+        }
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $data = Kuisioner::findOrFail($id);
         return response()->json($data);
     }
@@ -66,7 +85,8 @@ class KuisionerController extends Controller
         return response()->json(['success' => true, 'message' => 'Kuisioner berhasil diperbarui']);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $data = Kuisioner::findOrFail($id);
         $data->delete();
         return response()->json([
