@@ -102,15 +102,24 @@
                     error: function(xhr) {
                         Notiflix.Loading.remove();
 
-                        let errors = xhr.responseJSON.errors;
-                        if (errors) {
-                            let errorMessages = Object.values(errors).map(err => err.join(" "))
+                        const response = xhr.responseJSON;
+
+                        if (response && response.errors) {
+                            $("#tambahKuisioner-modal").modal("hide");
+                            let errorMessages = Object.values(response.errors)
+                                .map(err => err.join(" "))
                                 .join("<br>");
                             Notiflix.Report.failure("Gagal!", errorMessages, "Tutup");
+                        } else if (response && response.message) {
+                            $("#tambahKuisioner-modal").modal("hide");
+                            // Tangani pesan error umum, misalnya kuisioner >= 10
+                            Notiflix.Notify.failure(response.message);
                         } else {
+                            $("#tambahKuisioner-modal").modal("hide");
                             Notiflix.Notify.failure("Terjadi kesalahan. Coba lagi.");
                         }
                     }
+
                 });
             });
 

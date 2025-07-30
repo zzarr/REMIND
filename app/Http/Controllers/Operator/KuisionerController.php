@@ -21,9 +21,10 @@ class KuisionerController extends Controller
 
     public function store(Request $request)
     {
-        $sum = Kuisioner::count();
+        $sum = Kuisioner::count(); // Ambil total pertanyaan saat ini
 
-        if ($sum = 10) {
+        // Pengecekan jumlah pertanyaan
+        if ($sum >= 10) {
             return response()->json(
                 [
                     'success' => false,
@@ -33,13 +34,16 @@ class KuisionerController extends Controller
             );
         }
 
+        // Validasi input dari request
         $request->validate([
             'pertanyaan' => 'required',
             'is_positive' => 'required',
         ]);
 
+        // Konversi ke boolean 1/0
         $is_positive = filter_var($request->is_positive, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
 
+        // Simpan data kuisioner
         try {
             Kuisioner::create([
                 'pertanyaan' => $request->pertanyaan,
@@ -51,6 +55,9 @@ class KuisionerController extends Controller
                 'message' => 'Pertanyaan kuisioner berhasil ditambahkan',
             ]);
         } catch (\Exception $e) {
+            // Untuk debugging, log error-nya
+            \Log::error('Gagal menyimpan kuisioner: ' . $e->getMessage());
+
             return response()->json(
                 [
                     'success' => false,

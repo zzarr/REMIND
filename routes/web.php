@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Operator\{
     DashboardController as OperatorDashboardController,
-    AkunController
+    AkunController,
+    PasienController,
+    KuisionerController
    
 };
 
@@ -14,10 +16,7 @@ use App\Http\Controllers\TimPeneliti\{
 
 };
 
-use App\Http\Controllers\{
-    PasienController,
-    KuisionerController
-};
+
 use App\Models\HasilAnalisis;
 
 /*
