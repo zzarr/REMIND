@@ -22,7 +22,8 @@ class KuisionerController extends Controller
     public function store(Request $request)
     {
         $sum = Kuisioner::count();
-        if ($sum >= 10) {
+
+        if ($sum = 10) {
             return response()->json(
                 [
                     'success' => false,
