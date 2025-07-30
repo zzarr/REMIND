@@ -102,4 +102,12 @@ class KuisionerController extends Controller
             'message' => 'Data kuisioner berhasil dihapus.',
         ]);
     }
+
+    public function show(Request $request, $jenis, $pasien_id)
+    {
+        if (!in_array($jenis, ['pretest', 'posttest'])) {
+            abort(404);
+        }
+        return view('tim.kuisioner.step-form', compact('jenis', 'pasien_id'));
+    }
 }
