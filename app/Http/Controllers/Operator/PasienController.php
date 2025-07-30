@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\Pasien;
+use App\Models\Kuisioner;
 
 class PasienController extends Controller
 {
@@ -18,6 +19,12 @@ class PasienController extends Controller
         $data = Pasien::get();
 
         return DataTables::of($data)->make(true);
+    }
+
+     public function view(){
+        $kuisioner = Kuisioner::count();
+
+        return view('tim.pasien.index', compact('kuisioner'));
     }
 
     public function store(Request $request){
